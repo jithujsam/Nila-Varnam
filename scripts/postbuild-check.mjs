@@ -2,7 +2,7 @@
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 
-const isProd = process.env.VERCEL_ENV === 'production' || process.env.BUILD_TARGET === 'production';
+import { isProduction as isProd, stagingMode } from './mode.mjs';
 if (!isProd) { console.log('Post-build check skipped (not a production build).'); process.exit(0); }
 
 const roots = ['dist', '.vercel/output/static'];

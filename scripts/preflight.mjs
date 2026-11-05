@@ -2,7 +2,7 @@
 // continue unless the site is genuinely ready: real approved artwork, no placeholders, enquiry backend configured.
 import { readFileSync } from 'node:fs';
 
-const isProd = process.env.VERCEL_ENV === 'production' || process.env.BUILD_TARGET === 'production';
+import { isProduction as isProd, stagingMode } from './mode.mjs';
 const read = (p) => readFileSync(new URL(`../${p}`, import.meta.url), 'utf8');
 const problems = [];
 
@@ -27,4 +27,5 @@ if (problems.length) {
   console.error('\nPRODUCTION PREFLIGHT FAILED\n' + problems.map((p) => ` - ${p}`).join('\n') + '\n');
   process.exit(1);
 }
+if (stagingMode) console.warn('\nSTAGING MODE is ON (launch.config.json): placeholders allowed, site is noindex. Set stagingMode to false before launch.\n');
 console.log(isProd ? 'Production preflight passed.' : 'Preview/development build: placeholders allowed, pages will be noindex.');

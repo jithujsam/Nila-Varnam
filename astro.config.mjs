@@ -1,9 +1,9 @@
 import { defineConfig } from 'astro/config';
 import vercel from '@astrojs/vercel';
 import sitemap from '@astrojs/sitemap';
+import { isProduction } from './scripts/mode.mjs';
 
-// A "production" build is a Vercel production deployment, or any build that sets BUILD_TARGET=production.
-const isProduction = process.env.VERCEL_ENV === 'production' || process.env.BUILD_TARGET === 'production';
+// "Production" = a Vercel production deployment or BUILD_TARGET=production, unless launch.config.json has stagingMode: true.
 const site = process.env.PUBLIC_SITE_URL || 'http://localhost:4321';
 
 export default defineConfig({

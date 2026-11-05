@@ -35,6 +35,11 @@ Set in Vercel → Project → Settings → Environment Variables (Production **a
 
 Never commit real values. Server-only keys (`RESEND_API_KEY`, `ENQUIRY_*`) must **not** be prefixed `PUBLIC_`.
 
+## 3a. Staging mode (currently ON)
+`launch.config.json` has `"stagingMode": true`. While it is true, **every** build, including a Vercel Production build of `main`, behaves like a preview: placeholder artwork is allowed and labelled, the site is `noindex` with `robots.txt` disallowing all, and the email variables are not required (the contact form shows a notice until they are set). This lets `main` deploy now.
+
+**At launch:** approve real artwork, set the Production environment variables, then set `"stagingMode": false` and push. The production guards in section 4 switch on and the site becomes indexable. Do not launch without doing this.
+
 ## 4. What is a "production" build
 A build is treated as production when `VERCEL_ENV=production` (Vercel's Production environment) or `BUILD_TARGET=production`. Everything else (Vercel Preview, local) is a preview build.
 

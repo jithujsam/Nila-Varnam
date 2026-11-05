@@ -1,0 +1,4 @@
+{
+  "stagingMode": true,
+  "_note": "While stagingMode is true, EVERY build (even Vercel Production) behaves like a preview: placeholder artwork allowed and labelled, the site is noindex and robots.txt disallows all, and email variables are not required. Set to false at launch (after approving real artwork) to turn the production guards back on."
+}
