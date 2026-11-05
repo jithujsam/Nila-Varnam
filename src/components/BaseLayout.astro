@@ -47,9 +47,9 @@ const web = { '@context': 'https://schema.org', '@type': 'WebSite', name: site.n
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <script is:inline define:vars={{ REVEAL_ENABLED }}>
       document.documentElement.classList.replace('no-js', 'js');
-      if (REVEAL_ENABLED && !matchMedia('(prefers-reduced-motion: reduce)').matches && innerWidth >= 640) {
-        document.documentElement.classList.add('reveal-ready');
-        setTimeout(function () { document.querySelectorAll('[data-reveal]').forEach(function (e) { e.classList.add('is-in'); }); }, 2500);
+      if (REVEAL_ENABLED && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        var r = document.documentElement; r.classList.add('m-ready');
+        setTimeout(function () { if (!r.dataset.mOk) r.classList.remove('m-ready'); }, 3500);
       }
     </script>
     {[org, web, ...jsonLd].map((d) => <script type="application/ld+json" set:html={JSON.stringify(d)} />)}
@@ -72,11 +72,7 @@ const web = { '@context': 'https://schema.org', '@type': 'WebSite', name: site.n
         if ((e.target as HTMLElement).closest('a')) { sheet.dataset.open = 'false'; btn?.setAttribute('aria-expanded', 'false'); document.body.style.overflow = ''; }
       });
       document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && sheet?.dataset.open === 'true') btn?.click(); });
-      const items = document.querySelectorAll('[data-reveal]');
-      if (document.documentElement.classList.contains('reveal-ready') && 'IntersectionObserver' in window) {
-        const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } }), { threshold: 0.2, rootMargin: '0px 0px -10% 0px' });
-        items.forEach((i) => io.observe(i));
-      }
     </script>
+    <script>import '../scripts/motion';</script>
   </body>
 </html>

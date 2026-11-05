@@ -4,7 +4,24 @@ Related: [DESIGN](DESIGN.md) · [MASTER_PROMPT](../prompts/MASTER_PROMPT.md) · 
 
 Status tags: **[CONFIRMED]**, **[PROVISIONAL]**, **[OWNER INPUT]** as in DESIGN.md. Everything here is **[PROVISIONAL]** unless marked; the owner's brief (quiet, tactile, gallery-like motion; no heavy scroll theatre) is **[CONFIRMED]**.
 
-## 1. Motion language
+## 0. v2 (owner direction: "Framer-like"): supersedes the restrictions below where they conflict
+The owner asked for richer, Framer-style motion. The site now uses **Motion** (`motion`, the vanilla sibling of Framer Motion, about 29 KB gzipped for the whole site script) from `src/scripts/motion.ts`. The principles that remain: content is readable without JS, nothing loops, only opacity/transform/clip-path move, everything is off under `prefers-reduced-motion`, and a 3.5 s failsafe removes the hidden states if the script never starts.
+
+| Effect | Behaviour |
+|---|---|
+| Headline reveal | `h1`, `h2` and wall statements are split into words (client-side) that rise out of a mask, staggered 55 ms; entrance headlines on load, others when 40% in view |
+| Entrance | Supporting text fades up in sequence; the spotlight fades in over 1.8 s; the hero painting settles from 1.26 to 1.1 scale (the image is visible from first paint, so LCP is not delayed) |
+| Below-the-fold content | Fade and rise once, staggered by sibling (max 5), 0.95 s, spring-like ease `(.16, 1, .3, 1)` |
+| Painting reveal | A mask lifts bottom to top (`clip-path`, 1.15 s) while the image settles from 1.24 to 1.1 scale; observed on the figure because an element clipped to nothing never intersects |
+| Parallax | Each painting's image drifts +/-4% as it crosses the viewport (scroll-linked, linear) |
+| Process rule | The top rule of the stage list fills as you scroll through it |
+| Cursor label | Fine pointers only: a "View" label follows the cursor over paintings that open the viewer; the native cursor is hidden there. Decorative and `aria-hidden`; keyboard users are unaffected |
+| Magnetic buttons | Buttons shift up to a few pixels toward the pointer (fine pointers only) |
+| Page transitions | Cross-document view-transition crossfade (supported browsers) |
+| Viewer and menu | Viewer image eases in; the mobile menu rows stagger in |
+Measured on the local build: layout shift 0 on Home, Gallery, Artist and Process; Lighthouse mobile Performance 91 on Home (LCP 3.5 s), 95-99 elsewhere; Accessibility and Best Practices 100. Reduced-motion and no-JS tests pass (no running animations, nothing hidden).
+
+## 1. Motion language (v1, partly superseded by section 0)
 
 The site moves the way a visitor behaves in an unhurried gallery or turns a page of an art book: things are *already there*, they settle, and they respond when touched. Motion exists to (a) help someone look at a painting, (b) show where they are, (c) mark one next action. Nothing moves to impress.
 

@@ -110,18 +110,14 @@ a { color: var(--teal-700); }
 .m-right .plate-btn { justify-content: flex-end; }
 .m-center .plate-btn { justify-content: center; }
 .plate .frame { position: relative; overflow: hidden; background: none; flex: none; width: min(calc(100% * var(--mwn, 1)), calc(var(--h, 70svh) * var(--ar, .8))); }
-.frame img { width: 100%; height: 100%; object-fit: contain; transition: transform var(--m-image) var(--m-ease); }
+.frame img { width: 100%; height: 100%; object-fit: contain; transition: scale var(--m-image) var(--m-ease); }
 .frame .tag { position: absolute; left: 0; top: 0; background: var(--ink); color: var(--paper); font: 500 12px/1 var(--sans); letter-spacing: .06em; text-transform: uppercase; padding: 6px 8px; z-index: 2; }
 .night .frame .tag { background: var(--ivory); color: var(--ink); }
-.plate-btn:hover img { transform: scale(1.02); }
+.plate-btn:hover img { scale: 1.02; }
 .plate--xl { --h: min(80svh, 900px); --mwn: 1; }
 .plate--l { --h: min(68svh, 740px); --mwn: 1; }
 .plate--m { --h: min(54svh, 580px); --mwn: .82; }
 .plate--s { --h: min(40svh, 420px); --mwn: .6; }
-.settle img { animation: settle var(--m-settle) var(--m-ease) both; }
-@keyframes settle { from { transform: scale(1.015); } to { transform: scale(1); } }
-[data-reveal] { transition: opacity var(--m-image) var(--m-ease); }
-.reveal-ready [data-reveal]:not(.is-in) { opacity: 0; }
 @media (min-width: 1024px) {
   .plate { grid-column: var(--col, 1 / -1); margin-top: var(--drop, 0); align-self: var(--as, start); }
   .plate--m, .plate--s { --mwn: 1; }
@@ -324,5 +320,44 @@ dialog.lb::backdrop { background: var(--night); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition-property: color, background-color, border-color, opacity !important; transition-duration: 1ms !important; }
-  .reveal-ready [data-reveal]:not(.is-in) { opacity: 1; }
+}
+
+/* ===== Motion (docs/design/ANIMATION_SPEC.md, v2). Driven by src/scripts/motion.ts. Opacity, transform, clip-path only; nothing loops ===== */
+@keyframes lbimg { from { opacity: 0; transform: scale(.985); } to { opacity: 1; transform: none; } }
+@keyframes sheetin { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes lights { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeout { to { opacity: 0; } }
+.w { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: .16em; margin-bottom: -.16em; padding-right: .04em; }
+.wi { display: inline-block; }
+.prog { position: absolute; left: 0; right: 0; top: -1px; height: 2px; background: var(--teal-700); transform-origin: left center; transform: scaleX(0); }
+.night .prog { background: var(--kraft); }
+.stages { position: relative; }
+.cursor { position: fixed; left: 0; top: 0; z-index: 90; pointer-events: none; width: 92px; height: 92px; margin: -46px 0 0 -46px; border-radius: 50%; background: var(--ink); color: var(--paper); display: grid; place-items: center; font: 500 13px var(--sans); letter-spacing: .08em; text-transform: uppercase; opacity: 0; scale: .4; }
+.night ~ .cursor, .cursor { box-shadow: 0 0 0 1px color-mix(in srgb, var(--ivory) 30%, transparent); }
+.btn { transition: background-color var(--m-in) var(--m-ease), border-color var(--m-in) var(--m-ease), transform var(--m-in) var(--m-ease), color var(--m-in) var(--m-ease), translate .35s var(--m-ease); }
+.band .plate-btn img { transition: scale var(--m-image) var(--m-ease); }
+@media (hover: hover) { .band:hover .plate-btn img { scale: 1.035; } .m-ready .band:hover .plate-btn img { scale: 1.14; } }
+@media (prefers-reduced-motion: no-preference) {
+  /* hidden-until-revealed states exist only when the motion script is running (html.m-ready); a 3.5 s failsafe removes the class if it never starts */
+  .m-ready h1:not(.split-done), .m-ready h2:not(.split-done), .m-ready .statement:not(.split-done) { visibility: hidden; }
+  .m-ready .wi { transform: translateY(112%); }
+  .m-ready .mm { opacity: 0; transform: translateY(28px); }
+  .m-ready .plate .frame { clip-path: inset(0 0 100% 0); }
+  .m-ready .entrance .plate .frame { clip-path: none; }
+  .m-ready .frame img { scale: 1.1; }
+  .m-ready .plate-btn:hover img { scale: 1.13; }
+  .m-ready .room .spot, .m-ready .wall .spot { opacity: 1; }
+  .m-cursor .plate-btn:not(.static) { cursor: none; }
+  dialog.lb[open] .lb-img img:not(.out) { animation: lbimg .55s var(--m-ease) both; }
+  .sheet[data-open='true'] li { animation: sheetin .5s var(--m-ease) both; }
+  .sheet[data-open='true'] li:nth-child(2) { animation-delay: .04s; } .sheet[data-open='true'] li:nth-child(3) { animation-delay: .08s; }
+  .sheet[data-open='true'] li:nth-child(4) { animation-delay: .12s; } .sheet[data-open='true'] li:nth-child(5) { animation-delay: .16s; }
+  .sheet[data-open='true'] li:nth-child(6) { animation-delay: .2s; } .sheet[data-open='true'] li:nth-child(7) { animation-delay: .24s; }
+  @view-transition { navigation: auto; }
+  ::view-transition-old(root) { animation: 220ms ease both fadeout; }
+  ::view-transition-new(root) { animation: 360ms ease both lights; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition-property: color, background-color, border-color, opacity !important; transition-duration: 1ms !important; }
+  .cursor { display: none; }
 }

@@ -21,7 +21,7 @@ An independent, artist-led commissioned-art studio in Kerala, serving India. Thr
 3. **Catalogue indexing.** Small tracked labels and index numbers ("No. 03 / 08", "01 — Hospitality") give the editorial, catalogued feel. They are indices only: no invented titles, dates, dimensions, provenance, venues or "on view" language.
 4. **Type contrast.** Very large serif display (Instrument Serif, regular and italic) against small, quiet sans metadata. Headlines in plain language; italic marks one phrase per headline.
 5. **Light as the only effect.** Dark rooms carry one soft spotlight behind the painting (a single radial light, not a gradient decoration). Nothing else glows, blurs or floats.
-6. **Restrained motion.** Hung works fade in once; the entrance painting settles; hover zoom 1.02. Nothing is pinned, scrubbed or looping.
+6. **Cinematic but finite motion** (owner: Framer-like; see ANIMATION_SPEC section 0). Headlines rise out of masks, paintings are unveiled and drift gently on scroll, a cursor label invites a closer look. Nothing loops and nothing is pinned; all of it stops under reduced motion.
 
 Palette: kept and extended: ivory wall `#F4EFE3`, paper `#FBF9F2`, stone `#D5D0C4`, teal `#0D6B6E` (brand, links, focus), **night `#071B1D`** (dark rooms), teal-900 `#08494B`, kraft `#C39A6B` (hairlines and quiet marks only), ink `#2A2118`, red `#B3261E` (the one conversion signal per viewport; never on dark or teal grounds, where the CTA is ivory-filled). Typography: Instrument Serif + Instrument Sans (unchanged, per owner design file).
 

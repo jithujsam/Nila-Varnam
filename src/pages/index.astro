@@ -30,15 +30,15 @@ const hang = [
       <div class="bands">
         <a class="band band--a" href="/hospitality/"><div class="wrap hang" style="width:100%">
           <div class="b-text"><span class="band-no">01 — Hospitality</span><h3>Hospitality</h3><p class="lead">Paintings for hotels, resorts, restaurants and villas, briefed with owners and interior designers.</p><span class="go">Hospitality commissions</span></div>
-          {bHosp && <Plate art={bHosp} size="m" reveal />}
+          {bHosp && <Plate art={bHosp} size="m" reveal viewer={false} />}
         </div></a>
         <a class="band band--b" href="/gifting/"><div class="wrap hang" style="width:100%">
           <div class="b-text"><span class="band-no">02 — Corporate gifting</span><h3>Corporate gifting</h3><p class="lead">Hand-painted gifts for companies, premium clients and gifting agencies: a portrait, a painting or a small set.</p><span class="go">Gifting commissions</span></div>
-          {bGift && <Plate art={bGift} size="s" reveal />}
+          {bGift && <Plate art={bGift} size="s" reveal viewer={false} />}
         </div></a>
         <a class="band band--c" href="/commissions/"><div class="wrap hang" style="width:100%">
           <div class="b-text"><span class="band-no">03 — Private commissions</span><h3>Private commissions</h3><p class="lead">Portraits, devotional paintings and personal artwork, painted from your photographs and your brief.</p><span class="go">Private commissions</span></div>
-          {bPriv && <Plate art={bPriv} size="m" mAlign="right" reveal />}
+          {bPriv && <Plate art={bPriv} size="m" mAlign="right" reveal viewer={false} />}
         </div></a>
       </div>
     </div>
