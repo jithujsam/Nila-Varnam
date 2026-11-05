@@ -52,7 +52,8 @@ Generate qualified project-proposal enquiries for an independent, artist-led art
 | Commissions | private portraits, devotional art; what to send | Commission an artwork |
 | Gallery | proof of skill, whole paintings, lightbox | Commission something similar |
 | Artist | trust: self-taught, ~30 years, how the studio works | Request a proposal |
-| Contact | single enquiry form | submit |
+| Process | one authoritative explanation of commissioning: stages, what to send per market, what happens after you submit | Request a proposal |
+| Contact | single enquiry form with type-specific guidance | submit |
 | Privacy / Terms | legal | — |
 | Thank-you | confirmation (noindex) | — |
 

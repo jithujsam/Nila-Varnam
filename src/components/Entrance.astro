@@ -1,0 +1,35 @@
+---
+import Plate from './Plate.astro';
+import { HERO_SETTLE_ENABLED } from '../config/motion';
+import type { ResolvedArtwork } from '../lib/artwork';
+interface Props {
+  meta: string; h1: string; lead: string;
+  primary: { label: string; href: string }; secondary?: { label: string; href: string };
+  art: ResolvedArtwork; art2?: ResolvedArtwork;
+  variant?: 'right' | 'wide' | 'pair' | 'left';
+  night?: boolean;
+}
+const { meta, h1, lead, primary, secondary, art, art2, variant = 'right', night = true } = Astro.props;
+const spot = variant === 'left' ? '28%' : variant === 'wide' ? '66%' : '74%';
+---
+<section class:list={['entrance', `entrance--${variant}`, { night }]}>
+  {night && <div class="spot" style={`--spot-x:${spot}`} aria-hidden="true"></div>}
+  <div class="wrap hang">
+    <div class="e-text">
+      <p class="meta">{meta}</p>
+      <h1 set:html={h1} />
+      <p class="lead">{lead}</p>
+      <div class="btn-row">
+        <a class="btn btn-primary" href={primary.href}>{primary.label}</a>
+        {secondary && <a class="btn btn-secondary" href={secondary.href}>{secondary.label}</a>}
+      </div>
+    </div>
+    {variant === 'right' && <Plate art={art} size="xl" col="8 / span 5" eager settle={HERO_SETTLE_ENABLED} mAlign="center" />}
+    {variant === 'left' && <Plate art={art} size="xl" col="1 / span 5" eager settle={HERO_SETTLE_ENABLED} mAlign="center" />}
+    {variant === 'wide' && <Plate art={art} size="xl" col="2 / span 11" eager settle={HERO_SETTLE_ENABLED} />}
+    {variant === 'pair' && <>
+      <Plate art={art} size="m" col="7 / span 3" drop="0px" eager settle={HERO_SETTLE_ENABLED} />
+      {art2 && <Plate art={art2} size="s" col="10 / span 3" drop="64px" eager mAlign="right" />}
+    </>}
+  </div>
+</section>

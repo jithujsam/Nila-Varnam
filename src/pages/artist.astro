@@ -1,43 +1,38 @@
 ---
 import BaseLayout from '../components/BaseLayout.astro';
-import Close from '../components/Close.astro';
-import Plate from '../components/Plate.astro';
+import Entrance from '../components/Entrance.astro';
 import Lightbox from '../components/Lightbox.astro';
+import Close from '../components/Close.astro';
 import { getPlacement } from '../lib/artwork';
 import { artistLabel, capacity } from '../data/copy';
 import { site } from '../data/site';
 import { crumbs } from '../lib/seo';
-const art = getPlacement('artistImage');
+const art = getPlacement('artistEntrance');
 const person = site.artistName ? { '@context': 'https://schema.org', '@type': 'Person', name: site.artistName, jobTitle: 'Artist', worksFor: { '@type': 'Organization', name: site.name } } : null;
 ---
 <BaseLayout path="/artist/" title="The Artist — Self-Taught Painter in Kerala" description="About the artist behind NILA VARNAM: self-taught, around 30 years of practice, painting portraits, devotional art and commissioned work in Kerala." jsonLd={[crumbs([['Home', '/'], ['Artist', '/artist/']]), ...(person ? [person] : [])]}>
-  <section class="threshold threshold--left">
-    <div class="wrap hang">
-      <div class="t-text">
-        <h1>A self-taught artist with about 30 years of practice</h1>
-        <p class="lead">{artistLabel} paints from a studio in Kerala and learned by looking closely, trying things and painting continuously.</p>
-      </div>
-      <Plate art={art} size="xl" col="1 / span 5" eager settle class="t-art" />
+  <Entrance variant="left" meta="The artist" h1="A self-taught artist with about 30 years <em>of practice</em>" lead={`${artistLabel} paints from a studio in Kerala and learned by looking closely, trying things and painting continuously.`} primary={{ label: 'Request a proposal', href: '/contact/?type=general' }} secondary={{ label: 'See the gallery', href: '/gallery/' }} art={art} />
+
+  <section class="room" aria-labelledby="learned">
+    <div class="wrap cols">
+      <div><p class="meta">How the artist learned</p><h2 id="learned">No school, <em>only practice</em></h2></div>
+      <div><p class="lead">The artist is self-taught. The skill comes from about 30 years of observation, experiment and daily work.</p></div>
     </div>
   </section>
-  <section class="section alt">
-    <div class="wrap">
-      <div class="section-head"><h2>How the artist learned</h2></div>
-      <p class="lead">The artist is self-taught. The skill comes from about 30 years of observation, experiment and daily practice.</p>
+
+  <section class="room stone" aria-labelledby="paints">
+    <div class="wrap cols">
+      <div><p class="meta">What is painted</p><h2 id="paints">Mediums <em>and subjects</em></h2></div>
+      <ul class="tlist" style="margin-top:0"><li>Watercolour</li><li>Oil</li><li>Acrylic</li><li>Portraits</li><li>Sketches</li><li>Devotional paintings</li><li>Other subjects, by discussion</li></ul>
     </div>
   </section>
-  <section class="section">
-    <div class="wrap split">
-      <h2>What the artist paints</h2>
-      <p class="lead">Watercolour, oil and acrylic. Portraits, sketches and religious subjects. Other subjects by discussion.</p>
+
+  <section class="room" aria-labelledby="studio">
+    <div class="wrap cols">
+      <div><p class="meta">The studio</p><h2 id="studio">Two people, <em>one process</em></h2></div>
+      <div><p class="lead">The artist paints. The studio’s operator finds clients, understands requirements, prepares proposals and coordinates each commission, so clients have one point of contact.</p><p>It is a small studio, so every project is scheduled with the artist.{capacity}</p><a class="link" href="/process/">How commissioning works</a></div>
     </div>
   </section>
-  <section class="section stone">
-    <div class="wrap split">
-      <h2>How the studio works</h2>
-      <div><p class="lead">The artist paints. The studio’s operator handles enquiries, proposals, schedules and delivery, so that clients have one point of contact.</p><p>It is a small studio, so every project is scheduled with the artist.{capacity}</p></div>
-    </div>
-  </section>
-  <Close h2="Work with the studio" line="Tell us about your project and we will reply with next steps." label="Request a proposal" href="/contact/?type=general" />
+  <Close line="Tell us about your project and we will reply with next steps." />
   <Lightbox />
 </BaseLayout>

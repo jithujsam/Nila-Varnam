@@ -1,63 +1,50 @@
 ---
 import BaseLayout from '../components/BaseLayout.astro';
-import Threshold from '../components/Threshold.astro';
+import Entrance from '../components/Entrance.astro';
 import Plate from '../components/Plate.astro';
-import Lightbox from '../components/Lightbox.astro';
-import Rows from '../components/Rows.astro';
-import Steps from '../components/Steps.astro';
+import Stages from '../components/Stages.astro';
+import Checklist from '../components/Checklist.astro';
 import Faq from '../components/Faq.astro';
+import Lightbox from '../components/Lightbox.astro';
 import Close from '../components/Close.astro';
 import { getPlacement } from '../lib/artwork';
-import { commissionSteps, faqCommissions } from '../data/copy';
+import { sendPrivate, stages, faqCommissions } from '../data/copy';
 import { crumbs, service, faqLd } from '../lib/seo';
-const art = getPlacement('commissionsHero');
-const interlude = getPlacement('commissionsInterlude');
-const desc = 'Commission a watercolour, oil or acrylic portrait or a religious painting from a self-taught Kerala artist. Send a photograph and a few details.';
+const art = getPlacement('commissionsEntrance');
+const note = getPlacement('commissionsNote');
+const desc = 'Commission a watercolour, oil or acrylic portrait or a devotional painting from a self-taught Kerala artist. Send a photograph and a few details.';
 ---
-<BaseLayout path="/commissions/" title="Commissioned Portraits and Paintings in India" description={desc} jsonLd={[service('Commissioned portraits and paintings', '/commissions/', desc), crumbs([['Home', '/'], ['Commissions', '/commissions/']]), faqLd(faqCommissions)]}>
-  <Threshold variant="left" h1="Commission a portrait or painting" lead="Send a photograph and a few details. The artist paints portraits, religious subjects and other works in watercolour, oil or acrylic." primary={{ label: 'Commission an artwork', href: '/contact/?type=commission' }} secondary={{ label: 'See the gallery', href: '/gallery/' }} art={art} />
+<BaseLayout path="/commissions/" title="Commissioned Portraits and Paintings in India" description={desc} jsonLd={[service('Commissioned portraits and paintings', '/commissions/', desc), crumbs([['Home', '/'], ['Private commissions', '/commissions/']]), faqLd(faqCommissions)]}>
+  <Entrance variant="left" meta="Private commissions" h1="Commission a portrait <em>or painting</em>" lead="Send a photograph and a few details. The artist paints portraits, devotional subjects and other works in watercolour, oil or acrylic." primary={{ label: 'Commission an artwork', href: '/contact/?type=commission' }} secondary={{ label: 'See the gallery', href: '/gallery/' }} art={art} />
 
-  <section class="editorial">
-    <div class="wrap hang rooms">
-      <div style="grid-column:1 / -1" class="pf-text">
-        <div class="section-head"><h2>What the artist paints</h2></div>
-        <Rows items={[
-          { title: 'Portraits', text: 'People, painted from photographs you send.' },
-          { title: 'Devotional and religious paintings', text: 'Religious subjects painted to commission.' },
-          { title: 'Sketches', text: 'Drawn studies and sketches.' },
-          { title: 'Other subjects', text: 'Discussed with the artist and confirmed before painting.' },
-        ]} />
-      </div>
-      {interlude && <Plate art={interlude} size="l" col="2 / span 5" mAlign="left" reveal />}
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="wrap">
-      <div class="section-head"><h2>Watercolour, oil and acrylic</h2><p class="lead" style="margin-top:12px">We advise which medium suits your subject and where it will hang.</p></div>
-      <Rows items={[
-        { title: 'Watercolour', text: 'Transparent washes on paper, well suited to portraits with soft light.' },
-        { title: 'Oil', text: 'Rich colour and a smooth finish on canvas, often chosen for formal and devotional work.' },
-        { title: 'Acrylic', text: 'Strong colour and quick-drying layers on canvas.' },
-      ]} />
-    </div>
-  </section>
-
-  <section class="section stone"><div class="wrap"><div class="section-head"><h2>How a commission works</h2></div><Steps items={commissionSteps} /></div></section>
-
-  <section class="section">
-    <div class="wrap split">
-      <h2>What to send</h2>
-      <ul class="rows send">
-        <li>A clear, high-resolution photograph. A window-lit one is best.</li>
-        <li>The size and orientation you would like, and where it will hang.</li>
-        <li>The medium you prefer, or ask us to advise.</li>
-        <li>The date you need it by.</li>
+  <section class="room" aria-labelledby="paints">
+    <div class="wrap cols">
+      <div><p class="meta">What is painted</p><h2 id="paints">What the artist <em>paints</em></h2></div>
+      <ul class="tlist" style="margin-top:0">
+        <li>Portraits</li><li>Devotional paintings</li><li>Sketches</li><li>Other subjects, by discussion</li>
       </ul>
     </div>
   </section>
 
-  <section class="section alt"><div class="wrap"><div class="section-head"><h2>Questions about commissions</h2></div><Faq items={faqCommissions} /></div></section>
-  <Close h2="Commission an artwork" line="Send a short brief and a photograph when we reply." label="Commission an artwork" href="/contact/?type=commission" />
+  <section class="room stone" aria-labelledby="mediums">
+    <div class="wrap hang">
+      <div style="grid-column:1 / -1"><p class="meta">Mediums</p><h2 id="mediums" style="max-width:14ch">Watercolour, oil <em>and acrylic</em></h2></div>
+      <div class="cols" style="grid-column:1 / -1">
+        <ul class="tlist" style="margin-top:0">
+          <li>Watercolour<small>Transparent washes on paper, well suited to portraits with soft light.</small></li>
+          <li>Oil<small>Rich colour and a smooth finish on canvas, often chosen for formal and devotional work.</small></li>
+          <li>Acrylic<small>Strong colour and quick-drying layers on canvas.</small></li>
+        </ul>
+        {note && <Plate art={note} size="l" mAlign="right" reveal />}
+      </div>
+    </div>
+  </section>
+
+  <section class="room" aria-labelledby="send"><div class="wrap"><p class="meta">Your brief</p><h2 id="send">What to send</h2><p class="lead" style="margin-top:24px">We will advise on medium and size once we see your photograph and hear where the painting will hang.</p><Checklist items={sendPrivate} two /></div></section>
+
+  <section class="room night" aria-labelledby="after"><div class="wrap"><p class="meta">After you send your brief</p><h2 id="after" style="max-width:14ch">What happens <em>next</em></h2><Stages items={stages} /><div class="btn-row"><a class="btn btn-secondary" href="/process/">Read the full process</a></div></div></section>
+
+  <section class="room" aria-labelledby="faq"><div class="wrap"><p class="meta">Questions</p><h2 id="faq" style="margin-bottom:var(--s7)">Questions about commissions</h2><Faq items={faqCommissions} /></div></section>
+  <Close meta="Private commissions" h2="Commission an <em>artwork</em>" line="Send a short brief and we will reply with next steps." label="Commission an artwork" href="/contact/?type=commission" types={false} />
   <Lightbox />
 </BaseLayout>

@@ -56,6 +56,7 @@ Keyword-to-page mapping is intentional and non-exclusive: intent is mapped to pa
 | `/commissions/` | Private commissions and portraits | yes | Commissions |
 | `/gallery/` | Gallery (Portraits, Devotional) | yes | Gallery |
 | `/artist/` | The artist and the studio | yes | Artist |
+| `/process/` | How commissioning works | yes | Process |
 | `/contact/` | Request a proposal (form) | yes | button |
 | `/thank-you/` | Form confirmation | **noindex** | — |
 | `/privacy/` | Privacy | yes (low priority) | footer |

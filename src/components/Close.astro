@@ -1,10 +1,17 @@
 ---
-interface Props { h2: string; line: string; label: string; href: string; }
-const { h2, line, label, href } = Astro.props;
+interface Props { meta?: string; h2?: string; line: string; label?: string; href?: string; types?: boolean; }
+const { meta = 'Start a brief', h2 = 'Tell us about <em>your project.</em>', line, label = 'Request a proposal', href = '/contact/?type=general', types = true } = Astro.props;
 ---
-<section class="section deep on-teal">
-  <div class="wrap split">
-    <div><h2>{h2}</h2><p class="lead" style="margin-top:16px">{line}</p></div>
-    <div style="align-self:end"><a class="btn btn-primary" href={href}>{label}</a></div>
+<section class="close night">
+  <div class="wrap">
+    <p class="meta">{meta}</p>
+    <h2 set:html={h2} />
+    <p class="lead">{line}</p>
+    <div class="btn-row"><a class="btn btn-primary" href={href}>{label}</a></div>
+    {types && <div class="types">
+      <a class="btn btn-secondary" href="/contact/?type=hospitality">Hospitality project</a>
+      <a class="btn btn-secondary" href="/contact/?type=gifting">Corporate gifting</a>
+      <a class="btn btn-secondary" href="/contact/?type=commission">Private commission</a>
+    </div>}
   </div>
 </section>

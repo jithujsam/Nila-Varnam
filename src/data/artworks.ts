@@ -50,13 +50,15 @@ export const categories: Category[] = [
 ];
 
 export const artworks: Artwork[] = [
-  // ---- TEMPORARY PLACEHOLDERS (preview/dev only; replace with real, approved works) ----
-  { id: 'ph-01', status: 'placeholder', category: 'portrait', order: 1, file: 'placeholders/placeholder-01.svg', width: 1600, height: 2000, alt: 'Temporary placeholder image 01', title: 'Placeholder artwork 01', description: 'Temporary stand-in for a portrait painting.' },
-  { id: 'ph-02', status: 'placeholder', category: 'portrait', order: 2, file: 'placeholders/placeholder-02.svg', width: 1600, height: 2000, alt: 'Temporary placeholder image 02', title: 'Placeholder artwork 02', description: 'Temporary stand-in for a portrait painting.' },
-  { id: 'ph-03', status: 'placeholder', category: 'portrait', order: 3, file: 'placeholders/placeholder-03.svg', width: 2000, height: 1600, alt: 'Temporary placeholder image 03', title: 'Placeholder artwork 03', description: 'Temporary stand-in for a landscape-format painting.' },
-  { id: 'ph-04', status: 'placeholder', category: 'portrait', order: 4, file: 'placeholders/placeholder-04.svg', width: 1500, height: 2000, alt: 'Temporary placeholder image 04', title: 'Placeholder artwork 04', description: 'Temporary stand-in for a portrait painting.' },
-  { id: 'ph-05', status: 'placeholder', category: 'devotional', order: 1, file: 'placeholders/placeholder-05.svg', width: 1500, height: 1800, alt: 'Temporary placeholder image 05', title: 'Placeholder artwork 05', description: 'Temporary stand-in for a devotional painting.' },
-  { id: 'ph-06', status: 'placeholder', category: 'devotional', order: 2, file: 'placeholders/placeholder-06.svg', width: 1600, height: 2000, alt: 'Temporary placeholder image 06', title: 'Placeholder artwork 06', description: 'Temporary stand-in for a devotional painting.' },
+  // ---- TEMPORARY PLACEHOLDERS: generated abstract images (npm run placeholders). Preview/staging only, tagged on the page. ----
+  { id: 'ph-01', status: 'placeholder', category: 'portrait', order: 1, file: 'placeholders/placeholder-01.jpg', width: 1500, height: 1875, alt: 'Temporary placeholder image 01' },
+  { id: 'ph-02', status: 'placeholder', category: 'portrait', order: 2, file: 'placeholders/placeholder-02.jpg', width: 1500, height: 1875, alt: 'Temporary placeholder image 02' },
+  { id: 'ph-03', status: 'placeholder', category: 'portrait', order: 3, file: 'placeholders/placeholder-03.jpg', width: 2000, height: 1400, alt: 'Temporary placeholder image 03' },
+  { id: 'ph-06', status: 'placeholder', category: 'portrait', order: 4, file: 'placeholders/placeholder-06.jpg', width: 1600, height: 1600, alt: 'Temporary placeholder image 06' },
+  { id: 'ph-08', status: 'placeholder', category: 'portrait', order: 5, file: 'placeholders/placeholder-08.jpg', width: 2000, height: 1300, alt: 'Temporary placeholder image 08' },
+  { id: 'ph-04', status: 'placeholder', category: 'devotional', order: 1, file: 'placeholders/placeholder-04.jpg', width: 1500, height: 2000, alt: 'Temporary placeholder image 04' },
+  { id: 'ph-05', status: 'placeholder', category: 'devotional', order: 2, file: 'placeholders/placeholder-05.jpg', width: 1500, height: 1800, alt: 'Temporary placeholder image 05' },
+  { id: 'ph-07', status: 'placeholder', category: 'devotional', order: 3, file: 'placeholders/placeholder-07.jpg', width: 1500, height: 1950, alt: 'Temporary placeholder image 07' },
 
   // ---- REAL WORKS: copy this block, set status 'approved' once the owner approves the file ----
   // {

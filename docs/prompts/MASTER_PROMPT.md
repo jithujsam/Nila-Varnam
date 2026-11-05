@@ -63,6 +63,7 @@ Implement every route; none may be a stub.
 | `/hospitality/` | Hospitality | hero, what we can paint, "what the portfolio shows today" honesty block, process, sizes/mediums/schedule, FAQ, close |
 | `/gifting/` | Gifting | hero, gift types, volume and schedule, process, FAQ, close |
 | `/commissions/` | Commissions | hero, what the artist paints, watercolour/oil/acrylic, process, what to send, FAQ, close |
+| `/process/` | Process | sticky stage index, long-form stages, what to send per market, what happens after you submit |
 | `/gallery/` | Gallery | Portraits and Devotional groups, accessible lightbox, index list, closing link |
 | `/artist/` | Artist | how the artist learned (self-taught, ~30 years), what is painted, how the studio works, close |
 | `/contact/` | Contact | the enquiry form; accepts `?type=hospitality|gifting|commission|general` to preselect; canonical stays `/contact/` |
@@ -91,7 +92,7 @@ These restate DESIGN.md so nothing is missed; DESIGN.md is authoritative.
 
 <components>
 Create these shared components (Astro components + one small CSS file per component or a shared token sheet):
-`BaseLayout` (head, metadata, skip link, header, footer), `Header` (wordmark, 5 links, outlined CTA, mobile sheet, current page), `Footer` (teal-950, columns, legal row), `Button` (variants: primary red, primary-on-teal ivory, secondary outlined, link), `Threshold` (entrance; replaces the old split `Hero`), `Plate`, `Lightbox`, `Wall`, `Lines`, `Section` (one/two-screen box, `--h`), `Rows` (list with 1px rules), `Steps` (numbered rows), `ArtworkFrame` (contained image, ratio), `Gallery`, `Lightbox`, `Faq` (all answers open), `EnquiryForm`, `Prose`, `JsonLd`, `Seo`.
+`BaseLayout` (head, metadata, skip link, header, footer), `Header` (wordmark, 5 links, outlined CTA, mobile sheet, current page), `Footer` (teal-950, columns, legal row), `Button` (variants: primary red, primary-on-teal ivory, secondary outlined, link), `Entrance` (page entrance: right, left, wide, pair), `Plate`, `Lightbox`, bands, salon hang, gallery walls, `Stages`, `Checklist`, `Faq`, `Close`, `Section` (one/two-screen box, `--h`), `Rows` (list with 1px rules), `Steps` (numbered rows), `ArtworkFrame` (contained image, ratio), `Gallery`, `Lightbox`, `Faq` (all answers open), `EnquiryForm`, `Prose`, `JsonLd`, `Seo`.
 Mobile: bar with wordmark and menu button; full-screen menu sheet ending in the outlined "Request a proposal" button; no fixed bottom action bar; 44px targets.
 </components>
 

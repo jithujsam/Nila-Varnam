@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 1800" width="1500" height="1800" role="img" aria-label="Temporary placeholder 05">
-  <rect width="1500" height="1800" fill="#5B4636"/>
-  <path d="M0 1116 C 450 900, 825.0000000000001 1404, 1500 1044 L 1500 1800 L 0 1800 Z" fill="#C39A6B"/>
-  <path d="M0 1476 C 525 1260, 1050 1710, 1500 1440 L 1500 1800 L 0 1800 Z" fill="#D5D0C4"/>
-  <rect x="120" y="144" width="1260" height="1512" fill="none" stroke="#F4EFE3" stroke-opacity=".55" stroke-width="4" stroke-dasharray="28 20"/>
-  <text x="50%" y="756" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="102" font-weight="700" fill="#F4EFE3" fill-opacity=".92">PLACEHOLDER</text>
-  <text x="50%" y="864.8" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="68" fill="#F4EFE3" fill-opacity=".92">Temporary image 05</text>
-  <text x="50%" y="946.4" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="47.599999999999994" fill="#F4EFE3" fill-opacity=".85">Not artwork. Replace in src/data/artworks.ts</text>
-</svg>

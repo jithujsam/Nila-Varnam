@@ -1,62 +1,86 @@
 ---
 import BaseLayout from '../components/BaseLayout.astro';
-import Threshold from '../components/Threshold.astro';
+import Entrance from '../components/Entrance.astro';
 import Plate from '../components/Plate.astro';
-import Wall from '../components/Wall.astro';
-import Lines from '../components/Lines.astro';
+import Stages from '../components/Stages.astro';
 import Lightbox from '../components/Lightbox.astro';
 import Close from '../components/Close.astro';
 import { getPlacement } from '../lib/artwork';
+import { stages } from '../data/copy';
 
-const hero = getPlacement('homeHero');
-const [p1, p2, p3] = getPlacement('homeWorks');
-const dev = getPlacement('homeDevotional');
+const entrance = getPlacement('homeEntrance');
+const [bHosp, bGift, bPriv] = getPlacement('homeBands');
+const salon = getPlacement('homeSalon');
+const practice = getPlacement('homePractice');
+const hang = [
+  { size: 'l', col: '1 / span 4', m: 'left' },
+  { size: 'l', col: '5 / span 5', m: 'right' },
+  { size: 'xl', col: '10 / span 3', m: 'center' },
+  { size: 'm', col: '2 / span 3', m: 'left' },
+  { size: 'm', col: '7 / span 3', m: 'right' },
+] as const;
 ---
-<BaseLayout path="/" current="/" title="NILA VARNAM — Commissioned paintings from Kerala" description="Original paintings commissioned for hotels, designers, corporate gifting and private clients across India, by a self-taught artist with about 30 years of practice.">
-  <!-- Entrance -->
-  <Threshold variant="right" h1="Commissioned paintings from a Kerala art studio" lead="Original portraits, devotional art and other paintings by one self-taught artist, made to commission across India." primary={{ label: 'Request a proposal', href: '/contact/?type=general' }} secondary={{ label: 'Enter the gallery', href: '/gallery/' }} art={hero} />
+<BaseLayout path="/" current="/" title="NILA VARNAM — Commissioned paintings from Kerala" description="Original paintings commissioned for hotels, resorts, companies and private clients across India, by a self-taught artist with about 30 years of practice.">
+  <Entrance variant="right" meta="Independent art studio · Kerala, India" h1="Original paintings, <em>made to commission.</em>" lead="A self-taught artist with about 30 years of practice paints for hotels, resorts, companies and private collectors across India." primary={{ label: 'Request a proposal', href: '/contact/?type=general' }} secondary={{ label: 'Enter the gallery', href: '/gallery/' }} art={entrance} />
 
-  <!-- First room: portraits -->
-  <section class="room" aria-labelledby="room-portraits">
+  <section class="room" aria-labelledby="three">
     <div class="wrap">
-      <div class="room-head"><h2 id="room-portraits">Portraits</h2><p>Portrait paintings, hung whole.</p></div>
-      <div class="hang rooms">
-        {p1 && <Plate art={p1} size="xl" col="1 / span 6" reveal />}
-        {p2 && <Plate art={p2} size="l" col="2 / span 10" mAlign="center" reveal />}
-        {p3 && <Plate art={p3} size="s" col="8 / span 3" align="start" mAlign="right" drop="0px" reveal />}
+      <p class="meta">Commissions</p>
+      <h2 id="three" style="max-width:16ch">Three ways to commission an <em>original painting</em></h2>
+      <div class="bands">
+        <a class="band band--a" href="/hospitality/"><div class="wrap hang" style="width:100%">
+          <div class="b-text"><span class="band-no">01 — Hospitality</span><h3>Hospitality</h3><p class="lead">Paintings for hotels, resorts, restaurants and villas, briefed with owners and interior designers.</p><span class="go">Hospitality commissions</span></div>
+          {bHosp && <Plate art={bHosp} size="m" reveal />}
+        </div></a>
+        <a class="band band--b" href="/gifting/"><div class="wrap hang" style="width:100%">
+          <div class="b-text"><span class="band-no">02 — Corporate gifting</span><h3>Corporate gifting</h3><p class="lead">Hand-painted gifts for companies, premium clients and gifting agencies: a portrait, a painting or a small set.</p><span class="go">Gifting commissions</span></div>
+          {bGift && <Plate art={bGift} size="s" reveal />}
+        </div></a>
+        <a class="band band--c" href="/commissions/"><div class="wrap hang" style="width:100%">
+          <div class="b-text"><span class="band-no">03 — Private commissions</span><h3>Private commissions</h3><p class="lead">Portraits, devotional paintings and personal artwork, painted from your photographs and your brief.</p><span class="go">Private commissions</span></div>
+          {bPriv && <Plate art={bPriv} size="m" mAlign="right" reveal />}
+        </div></a>
       </div>
     </div>
   </section>
 
-  <!-- Wall text -->
-  <Wall link={{ label: 'The artist', href: '/artist/' }}>Painted by hand, by one self-taught artist with about 30 years of practice.</Wall>
-
-  <!-- Commissioning room -->
-  <section class="room deep on-teal" aria-labelledby="room-commission">
+  <section class="room stone" aria-labelledby="selected">
     <div class="wrap">
-      <div class="room-head"><h2 id="room-commission">Commission an original painting</h2><p>Every commission begins with a short brief.</p></div>
-      <Lines items={[
-        { title: 'Hospitality', text: 'Original paintings for hotels, resorts and restaurants.', href: '/hospitality/' },
-        { title: 'Gifting', text: 'Hand-painted gifts for companies and gifting agencies.', href: '/gifting/' },
-        { title: 'Private commissions', text: 'Portraits and paintings for private clients.', href: '/commissions/' },
-      ]} />
-      <a class="btn btn-primary" href="/contact/?type=general">Request a proposal</a>
+      <p class="meta">Selected works</p>
+      <h2 id="selected" style="max-width:14ch">The gallery, <em>hung whole</em></h2>
+      <div class="hang salon">
+        {salon.map((a, i) => { const h = hang[i % hang.length]; return <Plate art={a} size={h.size} col={h.col} mAlign={h.m} align="end" reveal={i > 0} />; })}
+      </div>
+      <div class="btn-row"><a class="btn btn-secondary" href="/gallery/">Walk the whole exhibition</a></div>
     </div>
   </section>
 
-  <!-- Second room: devotional -->
-  {dev.length > 0 && (
-    <section class="room" aria-labelledby="room-devotional">
-      <div class="wrap">
-        <div class="room-head"><h2 id="room-devotional">Devotional paintings</h2><p>Religious and devotional subjects.</p></div>
-        <div class="hang rooms">
-          {dev[0] && <Plate art={dev[0]} size="l" col="7 / span 5" mAlign="right" reveal />}
-          {dev[1] && <Plate art={dev[1]} size="m" col="2 / span 4" align="end" mAlign="left" reveal />}
-        </div>
+  <section class="room night" aria-labelledby="practice">
+    <div class="spot" style="--spot-x:80%;--spot-y:40%" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="hang" style="align-items:end">
+        <div style="grid-column:1 / span 7"><p class="meta">The practice</p><h2 id="practice" class="statement">Painted by hand, by one self-taught artist.</h2></div>
+        {practice && <Plate art={practice} size="m" col="9 / span 4" mAlign="right" reveal />}
       </div>
-    </section>
-  )}
+      <ul class="facts">
+        <li><span class="f-big">About 30 years</span><span class="f-sm">of continuous practice</span></li>
+        <li><span class="f-big">Self-taught</span><span class="f-sm">learned by observation, experiment and daily work</span></li>
+        <li><span class="f-big">Watercolour, oil, acrylic</span><span class="f-sm">plus portraits, sketches and devotional paintings</span></li>
+        <li><span class="f-big">Kerala</span><span class="f-sm">working with clients across India</span></li>
+      </ul>
+      <div class="btn-row"><a class="btn btn-secondary" href="/artist/">About the artist</a></div>
+    </div>
+  </section>
 
-  <Close h2="Tell us about your project" line="Share a short brief and we will reply with next steps." label="Request a proposal" href="/contact/?type=general" />
+  <section class="room" aria-labelledby="unfolds">
+    <div class="wrap">
+      <p class="meta">The process</p>
+      <h2 id="unfolds" style="max-width:14ch">How a commission <em>unfolds</em></h2>
+      <Stages items={stages} />
+      <div class="btn-row"><a class="btn btn-secondary" href="/process/">Read the full process</a></div>
+    </div>
+  </section>
+
+  <Close line="Tell us what you need. A short brief is enough." />
   <Lightbox />
 </BaseLayout>

@@ -1,0 +1,5 @@
+---
+interface Props { items: { title: string; text: string }[]; six?: boolean; }
+const { items, six = false } = Astro.props;
+---
+<ol class:list={['stages', { six }]}>{items.map((i) => <li><h3>{i.title}</h3><p>{i.text}</p></li>)}</ol>

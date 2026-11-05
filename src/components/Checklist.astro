@@ -1,0 +1,5 @@
+---
+interface Props { items: string[]; two?: boolean; }
+const { items, two = false } = Astro.props;
+---
+<ul class:list={['checklist', { two }]}>{items.map((i) => <li><span>{i}</span></li>)}</ul>

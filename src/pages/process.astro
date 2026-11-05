@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../components/BaseLayout.astro';
+import Checklist from '../components/Checklist.astro';
+import Close from '../components/Close.astro';
+import { sendHospitality, sendGifting, sendPrivate } from '../data/copy';
+import { crumbs } from '../lib/seo';
+const chapters = [
+  { id: 'brief', t: 'The brief', body: ['Every commission starts with a short brief: what you need, where it will go or who it is for, the size you have in mind and when you need it.', 'You do not need a complete specification. Send what you have and we will ask for the rest.'] },
+  { id: 'conversation', t: 'The conversation', body: ['We reply personally. We ask what is missing, say plainly what is and is not possible, and confirm the subject and medium with the artist before proposing anything.'] },
+  { id: 'proposal', t: 'The proposal', body: ['You receive a written proposal: subject, medium, size, schedule, cost and delivery arrangements, and how revisions are handled. Nothing is painted until you have approved it.'] },
+  { id: 'approval', t: 'Approval', body: ['You approve the proposal and any references. Payment and other terms are set out in the proposal, so there is one document to agree.'] },
+  { id: 'painting', t: 'Painting', body: ['The artist paints. We stay your single point of contact, and agree in the proposal whether and how you would like to follow progress.'] },
+  { id: 'delivery', t: 'Delivery', body: ['Packing and delivery are agreed with you before anything ships, including where the work should go and who receives it.'] },
+];
+---
+<BaseLayout path="/process/" title="How Commissioning Works | NILA VARNAM" description="How a commission works at NILA VARNAM: the brief, the conversation, the proposal, painting and delivery, and what to send for hospitality, gifting and private commissions." jsonLd={[crumbs([['Home', '/'], ['Process', '/process/']])]}>
+  <section class="room" style="padding-bottom:var(--s8)">
+    <div class="wrap">
+      <p class="meta">The process</p>
+      <h1 style="max-width:13ch">How commissioning <em>works</em></h1>
+      <p class="lead" style="margin-top:24px">The same professional process applies to a hotel lobby, a gift for a client or a portrait. This page explains each stage and what happens after you send a brief.</p>
+    </div>
+  </section>
+
+  <section class="room" style="padding-top:0">
+    <div class="wrap proc">
+      <nav class="proc-index" aria-label="Stages"><p class="meta">Stages</p><ol>{chapters.map((c) => <li><a href={`#${c.id}`}>{c.t}</a></li>)}<li><a href="#send">What to send</a></li><li><a href="#submitted">After you submit</a></li></ol></nav>
+      <div class="proc-body chapters">
+        {chapters.map((c) => <section class="chapter" id={c.id} aria-labelledby={`c-${c.id}`}><h2 id={`c-${c.id}`}>{c.t}</h2>{c.body.map((b) => <p>{b}</p>)}</section>)}
+        <section class="chapter" id="send" aria-labelledby="c-send">
+          <h2 id="c-send">What to send</h2>
+          <p>A short brief is enough to begin. These lists show what helps most for each kind of commission.</p>
+          <h3>Hospitality</h3><Checklist items={sendHospitality} />
+          <h3>Corporate gifting</h3><Checklist items={sendGifting} />
+          <h3>Private commissions</h3><Checklist items={sendPrivate} />
+        </section>
+        <section class="chapter" id="submitted" aria-labelledby="c-sub">
+          <h2 id="c-sub">After you submit</h2>
+          <p>Your brief is delivered to the studio and you see a confirmation on the page. We read every enquiry and reply to you personally; we ask for anything missing and tell you plainly what we can and cannot do.</p>
+          <p>We do not promise a reply time, a price or a delivery date until we have read your brief. Those are set out in the proposal.</p>
+          <div class="btn-row" style="margin-top:0"><a class="btn btn-primary" href="/contact/?type=general">Request a proposal</a></div>
+        </section>
+      </div>
+    </div>
+  </section>
+  <Close line="Start with a short brief." types />
+</BaseLayout>

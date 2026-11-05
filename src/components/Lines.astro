@@ -1,7 +1,0 @@
----
-interface Props { items: { title: string; text: string; href: string }[]; }
-const { items } = Astro.props;
----
-<ul class="lines">{items.map((i) => (
-  <li><a href={i.href}><span class="l-title">{i.title}</span><span class="l-text">{i.text}</span><span class="l-go" aria-hidden="true">→</span></a></li>
-))}</ul>

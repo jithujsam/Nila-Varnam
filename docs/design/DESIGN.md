@@ -4,7 +4,7 @@
 
 Related documents: [PROJECT_BLUEPRINT](../PROJECT_BLUEPRINT.md) · [MASTER_PROMPT](../prompts/MASTER_PROMPT.md) · [CONTENT_AND_SEO](../content/CONTENT_AND_SEO.md) · [ANIMATION_SPEC](ANIMATION_SPEC.md) · [REFERENCE_LIBRARY](REFERENCE_LIBRARY.md) · [ARTWORK_INVENTORY](../assets/ARTWORK_INVENTORY.md) · [CONTENT_INPUTS_REQUIRED](../content/CONTENT_INPUTS_REQUIRED.md)
 
-**Creative direction (owner, supersedes earlier layout decisions):** the site is an art exhibition that functions as a business. Composition, page sequence and component vocabulary are defined in [EXHIBITION_CONCEPT](EXHIBITION_CONCEPT.md); where it differs from §9 (hero split), §13 (gallery grid) or §14 (rows/steps on every page), the exhibition concept wins. Colours, type, red rules, accessibility and the placeholder rules in this document are unchanged.
+**Creative direction (owner, v2 full redesign; supersedes earlier layout, nav and page-hierarchy decisions):** the site is an art exhibition that functions as a business. Composition, page sequence and component vocabulary are defined in [EXHIBITION_CONCEPT](EXHIBITION_CONCEPT.md); where it differs from §9 (hero split), §13 (gallery grid) or §14 (rows/steps on every page), the exhibition concept wins. Colours, type, red rules, accessibility and placeholder rules in this document stand, with two extensions from the concept: a **night** ground `#071B1D` for dark rooms (text ivory, the primary button ivory-filled, never red), and catalogue-style small tracked labels (13px uppercase, indices only). Navigation is now Gallery · Hospitality · Gifting · Private commissions · Process · Artist.
 
 If any document disagrees with this one on a visual decision, this one wins.
 

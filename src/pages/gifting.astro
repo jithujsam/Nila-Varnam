@@ -1,58 +1,61 @@
 ---
 import BaseLayout from '../components/BaseLayout.astro';
-import Threshold from '../components/Threshold.astro';
+import Entrance from '../components/Entrance.astro';
 import Plate from '../components/Plate.astro';
-import Lightbox from '../components/Lightbox.astro';
-import Rows from '../components/Rows.astro';
-import Steps from '../components/Steps.astro';
+import Stages from '../components/Stages.astro';
+import Checklist from '../components/Checklist.astro';
 import Faq from '../components/Faq.astro';
+import Lightbox from '../components/Lightbox.astro';
 import Close from '../components/Close.astro';
 import { getPlacement } from '../lib/artwork';
-import { faqGifting, capacity } from '../data/copy';
+import { sendGifting, stages, faqGifting, capacity } from '../data/copy';
 import { crumbs, service, faqLd } from '../lib/seo';
-const art = getPlacement('giftingHero');
-const art2 = getPlacement('giftingSecond');
-const interlude = getPlacement('giftingInterlude');
+const [a1, a2] = getPlacement('giftingEntrance');
+const note = getPlacement('giftingNote');
 const desc = 'Hand-painted portraits and original paintings as corporate and executive gifts. Tell us the occasion and quantity and we will propose what is possible.';
 ---
 <BaseLayout path="/gifting/" title="Corporate Art Gifting in India — Hand-Painted Gifts" description={desc} jsonLd={[service('Hand-painted corporate gifts', '/gifting/', desc), crumbs([['Home', '/'], ['Gifting', '/gifting/']]), faqLd(faqGifting)]}>
-  <Threshold variant="pair" h1="Hand-painted gifts for companies and gifting agencies" lead="A portrait or painting made by hand is a gift that is personal and made once. Tell us the occasion and the quantity and we will propose what is possible." primary={{ label: 'Request a gifting proposal', href: '/contact/?type=gifting' }} secondary={{ label: 'See the gallery', href: '/gallery/' }} art={art} art2={art2} />
+  <Entrance variant="pair" meta="Corporate gifting" h1="Hand-painted gifts for <em>companies</em> and gifting agencies" lead="A portrait or painting made by hand is a gift that is personal and made once. Tell us the occasion and the quantity and we will propose what is possible." primary={{ label: 'Request a gifting proposal', href: '/contact/?type=gifting' }} secondary={{ label: 'See the gallery', href: '/gallery/' }} art={a1} art2={a2} />
 
-  <section class="section alt">
-    <div class="wrap">
-      <div class="section-head"><h2>Gifts the artist can paint</h2><p class="lead" style="margin-top:12px">Mediums include watercolour, oil, acrylic and sketches.</p></div>
-      <Rows items={[
-        { title: 'A portrait from a photograph', text: 'For an executive, a retirement or a commemorative occasion.' },
-        { title: 'A painting of a subject you choose', text: 'Discussed with the artist and confirmed before painting.' },
-        { title: 'A small set for a team or event', text: 'Sizes and numbers are agreed per project.' },
-      ]} />
+  <section class="room" aria-labelledby="occasions">
+    <div class="wrap cols">
+      <div><p class="meta">Occasions</p><h2 id="occasions">When a painting <em>is the gift</em></h2></div>
+      <ul class="tlist" style="margin-top:0">
+        <li>Milestones and anniversaries</li><li>Executive recognition and retirement</li><li>Client and partner appreciation</li><li>Festive and seasonal gifting</li><li>Welcome and farewell</li>
+      </ul>
     </div>
   </section>
 
-  <section class="editorial">
-    <div class="wrap hang rooms">
-      <div style="grid-column:1 / -1" class="pf-text">
-        <h2>Volume and schedule</h2>
-        <p class="lede" style="margin-top:24px">This is a small studio, so a gifting project suits a small number of meaningful gifts rather than hundreds.</p>
-        <p style="margin-top:24px">Tell us the quantity and the date and we will say plainly what fits.{capacity}</p>
+  <section class="room stone" aria-labelledby="formats">
+    <div class="wrap hang">
+      <div style="grid-column:1 / -1"><p class="meta">Formats</p><h2 id="formats" style="max-width:14ch">What the artist <em>can paint</em></h2></div>
+      <div class="cols" style="grid-column:1 / -1">
+        <ul class="tlist" style="margin-top:0">
+          <li>A portrait from a photograph<small>For an executive, a retirement or a commemorative occasion.</small></li>
+          <li>A painting of a subject you choose<small>Discussed with the artist and confirmed before painting.</small></li>
+          <li>A small set for a team or event<small>Sizes and numbers are agreed per project.</small></li>
+        </ul>
+        {note && <Plate art={note} size="m" mAlign="right" reveal />}
       </div>
-      {interlude && <Plate art={interlude} size="m" col="8 / span 4" mAlign="right" reveal />}
     </div>
   </section>
 
-  <section class="section stone">
-    <div class="wrap">
-      <div class="section-head"><h2>How a gifting commission works</h2></div>
-      <Steps items={[
-        { title: 'Share the occasion', text: 'The occasion, the recipients, the quantity and the date.' },
-        { title: 'Receive a proposal', text: 'Subjects, size, medium, schedule and cost.' },
-        { title: 'Approve references', text: 'You approve the references and the artist paints.' },
-        { title: 'Packing and delivery', text: 'Agreed with you before dispatch.' },
-      ]} />
+  <section class="room" aria-labelledby="volume">
+    <div class="wrap cols">
+      <div><p class="meta">Volume and schedule</p><h2 id="volume">A small studio, <em>honestly</em></h2></div>
+      <div><p class="lead">This is a small studio, so a gifting project suits a small number of meaningful gifts rather than hundreds.</p><p>Tell us the quantity and the date and we will say plainly what fits.{capacity}</p></div>
     </div>
   </section>
 
-  <section class="section alt"><div class="wrap"><div class="section-head"><h2>Questions about gifting</h2></div><Faq items={faqGifting} /></div></section>
-  <Close h2="Request a gifting proposal" line="Tell us the occasion, the quantity and the date." label="Request a gifting proposal" href="/contact/?type=gifting" />
+  <section class="room stone" aria-labelledby="send">
+    <div class="wrap"><p class="meta">Your brief</p><h2 id="send">What to send</h2><p class="lead" style="margin-top:24px">Send what you have. A short brief is enough to begin.</p><Checklist items={sendGifting} two /></div>
+  </section>
+
+  <section class="room night" aria-labelledby="after">
+    <div class="wrap"><p class="meta">After you send your brief</p><h2 id="after" style="max-width:14ch">What happens <em>next</em></h2><Stages items={stages} /><div class="btn-row"><a class="btn btn-secondary" href="/process/">Read the full process</a></div></div>
+  </section>
+
+  <section class="room" aria-labelledby="faq"><div class="wrap"><p class="meta">Questions</p><h2 id="faq" style="margin-bottom:var(--s7)">Questions about gifting</h2><Faq items={faqGifting} /></div></section>
+  <Close meta="Corporate gifting" h2="Request a gifting <em>proposal</em>" line="Tell us the occasion, the quantity and the date." label="Request a gifting proposal" href="/contact/?type=gifting" types={false} />
   <Lightbox />
 </BaseLayout>

@@ -1,10 +1,13 @@
 ---
 import BaseLayout from '../components/BaseLayout.astro';
+import { afterSubmit } from '../data/copy';
 ---
 <BaseLayout path="/thank-you/" noindex title="Thank you | NILA VARNAM" description="Your enquiry has been received.">
-  <section class="section"><div class="wrap"><div class="section-head">
-    <h1>Thank you</h1>
-    <p class="lead" style="margin-top:16px">Your enquiry has been received and we will reply to you personally.</p>
+  <section class="room"><div class="wrap">
+    <p class="meta">Brief received</p>
+    <h1 style="max-width:10ch">Thank <em>you</em></h1>
+    <p class="lead" style="margin-top:24px">Your enquiry has been received and we will reply to you personally.</p>
+    <ol class="next" style="max-width:640px;margin-top:48px">{afterSubmit.map((s) => <li><span><strong>{s.title}.</strong> {s.text}</span></li>)}</ol>
     <div class="btn-row"><a class="btn btn-secondary" href="/gallery/">See the gallery</a></div>
-  </div></div></section>
+  </div></section>
 </BaseLayout>

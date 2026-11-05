@@ -1,17 +1,51 @@
-/** Page copy. Source of truth: docs/content/CONTENT_AND_SEO.md. Facts not yet confirmed by the owner are omitted. */
+/** Shared copy. Source of truth: docs/content/CONTENT_AND_SEO.md. Facts not yet confirmed by the owner are omitted, never invented. */
 import { site } from './site';
 
 /** Set true only after the owner approves publishing the approximate monthly capacity (CONTENT_INPUTS_REQUIRED #13). */
 export const SHOW_CAPACITY = false;
-const capacity = SHOW_CAPACITY ? ' The studio completes roughly 5–10 paintings a month, depending on size, complexity and the mix of work.' : '';
-
+export const capacity = SHOW_CAPACITY ? ' The studio completes roughly 5–10 paintings a month, depending on size, complexity and the mix of work.' : '';
 export const artistLabel = site.artistName ?? 'The artist';
 
-export const commissionSteps = [
-  { title: 'Send a brief', text: 'Tell us what you need, the space or occasion, and the size you have in mind.' },
-  { title: 'Receive a proposal', text: 'We confirm what is possible, the medium, the schedule and the cost.' },
-  { title: 'The artist paints', text: 'Work is scheduled with the artist, and you stay in touch through one point of contact.' },
-  { title: 'Delivery', text: 'We discuss packing and delivery for your project before it ships.' },
+export const stages = [
+  { title: 'Brief', text: 'You tell us about the space or occasion, the size you have in mind and the date.' },
+  { title: 'Conversation', text: 'We reply personally, ask what is missing and confirm with the artist what is possible.' },
+  { title: 'Proposal', text: 'A written proposal sets out subject, medium, size, schedule and cost.' },
+  { title: 'Painting', text: 'The artist paints. We stay your single point of contact.' },
+  { title: 'Delivery', text: 'Packing and delivery are agreed with you before anything ships.' },
+];
+
+export const sendHospitality = [
+  'The property and its city, and the kind of space: lobby, restaurant, guest rooms, corridors, villa',
+  'Photographs of the space, and wall sizes or plans if you have them',
+  'Any palette, mood or design reference from your interior designer',
+  'How many paintings, and whether they should read as a set',
+  'The medium you prefer, or ask the studio to advise',
+  'Your opening or handover date',
+  'A budget range, if you have one',
+  'Who coordinates installation, and where the work should be delivered',
+];
+export const sendGifting = [
+  'The occasion, and who the gift is for (an individual, a team or a client group)',
+  'How many gifts you are considering',
+  'Whether a portrait is wanted, and if so a clear photograph of the person',
+  'Any subject, colours or themes that matter to the recipient',
+  'Size or format preferences, including whether framing is wanted',
+  'The date the gifts are needed and where they should be delivered',
+  'A budget range, if you have one',
+];
+export const sendPrivate = [
+  'What you would like painted: a portrait, a devotional subject or something else',
+  'A clear, high-resolution photograph if the painting is from a photograph',
+  'The size and orientation you have in mind, and where it will hang',
+  'The medium you prefer, or ask the studio to advise',
+  'The date you need it by',
+];
+
+export const afterSubmit = [
+  { title: 'We receive your brief', text: 'The enquiry is delivered to the studio and you see a confirmation on the page.' },
+  { title: 'We reply personally', text: 'We read it, ask for anything missing and say plainly what is and is not possible.' },
+  { title: 'You receive a proposal', text: 'Subject, medium, size, schedule, cost and delivery arrangements, in writing.' },
+  { title: 'You approve, we begin', text: 'Once you approve the proposal and references, the artist starts painting.' },
 ];
 
 export const faqHospitality = [
@@ -38,9 +72,3 @@ export const faqCommissions = [
   { q: 'Do you paint religious subjects?', a: 'Yes. Devotional and religious paintings are among the subjects the artist paints.' },
   { q: 'Can you paint other subjects?', a: 'Other subjects can be discussed and are confirmed with the artist.' },
 ];
-export const faqHome = [
-  { q: 'Where is the studio?', a: 'In Kerala. We work with clients across India.' },
-  { q: 'Who paints the work?', a: 'One self-taught artist with about 30 years of practice paints every commission.' },
-  { q: 'How do I start?', a: 'Send a short brief through the form and we will reply with next steps.' },
-];
-export { capacity };

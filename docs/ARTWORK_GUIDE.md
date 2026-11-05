@@ -12,6 +12,9 @@ Related: [DEPLOYMENT](DEPLOYMENT.md) · [ARTWORK_INVENTORY](assets/ARTWORK_INVEN
 
 Pages, the gallery grid, the lightbox, the index list and the structured data all read from these files.
 
+## Placeholders (current)
+Eight procedurally generated abstract images live in `src/assets/placeholders/` (`placeholder-01.jpg` … `08`), made by `npm run placeholders`. They are not artwork and never depict a studio project; each shows a "Placeholder" tag. Placement keys in `placements.ts`: `homeEntrance`, `homeBands` (hospitality, gifting, private), `homeSalon`, `homePractice`, `hospitalityEntrance`, `hospitalityNote`, `giftingEntrance` (pair), `giftingNote`, `commissionsEntrance`, `commissionsNote`, `artistEntrance`, `social`.
+
 ## Statuses
 | status | Where it shows |
 |---|---|

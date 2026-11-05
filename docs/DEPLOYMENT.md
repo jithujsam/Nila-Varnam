@@ -78,7 +78,7 @@ npm run dev              # http://localhost:4321
 npm run check            # type check
 npm run build            # preflight + build + post-build check
 BUILD_TARGET=production npm run build   # prove the production guards locally
-npm run placeholders     # regenerate the placeholder images (preview only)
+npm run placeholders     # regenerate the generated abstract placeholder images (preview only)
 npm run images -- <original> <name> [cropBottomPx]   # make a web derivative of a real painting
 ```
 

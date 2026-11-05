@@ -14,10 +14,11 @@ export const site = {
 };
 
 export const nav = [
+  { href: '/gallery/', label: 'Gallery' },
   { href: '/hospitality/', label: 'Hospitality' },
   { href: '/gifting/', label: 'Gifting' },
-  { href: '/commissions/', label: 'Commissions' },
-  { href: '/gallery/', label: 'Gallery' },
+  { href: '/commissions/', label: 'Private commissions' },
+  { href: '/process/', label: 'Process' },
   { href: '/artist/', label: 'Artist' },
 ];
 

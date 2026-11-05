@@ -6,7 +6,8 @@ const year = new Date().getFullYear();
   <div class="wrap">
     <div class="big">{site.name}</div>
     <div class="fcols">
-      <div><h2>Pages</h2><ul>{nav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}<li><a href="/contact/">Contact</a></li></ul></div>
+      <div><h2>Commissions</h2><ul><li><a href="/hospitality/">Hospitality</a></li><li><a href="/gifting/">Corporate gifting</a></li><li><a href="/commissions/">Private commissions</a></li><li><a href="/process/">How it works</a></li></ul></div>
+      <div><h2>Exhibition</h2><ul><li><a href="/gallery/">Gallery</a></li><li><a href="/artist/">The artist</a></li></ul></div>
       <div><h2>Studio</h2><ul><li>{site.descriptor}</li><li>{site.location}</li></ul></div>
       <div><h2>Contact</h2><ul>
         <li><a href="/contact/?type=general">Request a proposal</a></li>
@@ -14,7 +15,6 @@ const year = new Date().getFullYear();
         {site.whatsapp && <li><a href={`https://wa.me/${site.whatsapp}`} rel="noopener">Message on WhatsApp</a></li>}
         {site.phone && <li><a href={`tel:${site.phone.replace(/[^\d+]/g, '')}`}>{site.phone}</a></li>}
       </ul></div>
-      <div><h2>About</h2><ul><li><a href="/artist/">The artist</a></li><li><a href="/gallery/">Gallery</a></li><li><a href="/privacy/">Privacy</a></li></ul></div>
     </div>
     <div class="legal"><span>© {year} {site.name}</span><a href="/privacy/">Privacy</a></div>
   </div>
