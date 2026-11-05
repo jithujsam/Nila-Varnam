@@ -1,0 +1,21 @@
+---
+import { site, nav, cta } from '../data/site';
+const { current = '/' } = Astro.props;
+const isCur = (href: string) => current.startsWith(href);
+---
+<header class="header">
+  <div class="wrap">
+    <a class="wordmark" href="/" aria-label={`${site.name}, home`}>{site.name}</a>
+    <nav aria-label="Main" class="desk"><ul class="nav-list">
+      {nav.map((n) => <li><a href={n.href} aria-current={isCur(n.href) ? 'page' : undefined}>{n.label}</a></li>)}
+    </ul></nav>
+    <a class="btn btn-secondary header-cta" href={cta.href}>{cta.label}</a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h18M3 12h18M3 17h18" /></svg>
+    </button>
+  </div>
+  <nav id="menu" class="sheet" aria-label="Menu" data-open="false">
+    <ul>{nav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}<li><a href="/contact/">Contact</a></li></ul>
+    <a class="btn btn-secondary" href={cta.href} style="width:100%">{cta.label}</a>
+  </nav>
+</header>

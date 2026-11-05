@@ -1,0 +1,21 @@
+---
+import { site, nav } from '../data/site';
+const year = new Date().getFullYear();
+---
+<footer class="footer">
+  <div class="wrap">
+    <div class="big">{site.name}</div>
+    <div class="fcols">
+      <div><h2>Pages</h2><ul>{nav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}<li><a href="/contact/">Contact</a></li></ul></div>
+      <div><h2>Studio</h2><ul><li>{site.descriptor}</li><li>{site.location}</li></ul></div>
+      <div><h2>Contact</h2><ul>
+        <li><a href="/contact/?type=general">Request a proposal</a></li>
+        {site.email && <li><a href={`mailto:${site.email}`}>{site.email}</a></li>}
+        {site.whatsapp && <li><a href={`https://wa.me/${site.whatsapp}`} rel="noopener">Message on WhatsApp</a></li>}
+        {site.phone && <li><a href={`tel:${site.phone.replace(/[^\d+]/g, '')}`}>{site.phone}</a></li>}
+      </ul></div>
+      <div><h2>About</h2><ul><li><a href="/artist/">The artist</a></li><li><a href="/gallery/">Gallery</a></li><li><a href="/privacy/">Privacy</a></li></ul></div>
+    </div>
+    <div class="legal"><span>© {year} {site.name}</span><a href="/privacy/">Privacy</a></div>
+  </div>
+</footer>

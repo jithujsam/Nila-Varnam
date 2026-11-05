@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../components/BaseLayout.astro';
+import Gallery from '../components/Gallery.astro';
+import Close from '../components/Close.astro';
+import { hasPlaceholders, getArtworks } from '../lib/artwork';
+import { crumbs } from '../lib/seo';
+const count = getArtworks().length;
+---
+<BaseLayout path="/gallery/" title="Gallery — Portrait and Devotional Paintings" description="Portrait and devotional paintings by the NILA VARNAM artist, photographed whole. Open any work to see it larger." jsonLd={[crumbs([['Home', '/'], ['Gallery', '/gallery/']])]}>
+  <section class="section" style="padding-bottom:0">
+    <div class="wrap"><div class="section-head" style="margin-bottom:0">
+      <h1>Gallery of paintings</h1>
+      <p class="lead" style="margin-top:16px">Portrait and devotional paintings, photographed whole. Open a work to see it larger.</p>
+      {!hasPlaceholders && count < 8 && <p class="note">More work is added as it is photographed.</p>}
+    </div></div>
+  </section>
+  <Gallery />
+  <section class="section alt"><div class="wrap"><h2>Want a painting like one of these?</h2><div class="btn-row"><a class="btn btn-secondary" href="/contact/?type=commission">Commission something similar</a></div></div></section>
+  <Close h2="Request a proposal" line="Tell us about your project and we will reply with next steps." label="Request a proposal" href="/contact/?type=general" />
+</BaseLayout>

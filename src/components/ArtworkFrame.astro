@@ -1,0 +1,13 @@
+---
+import { Image } from 'astro:assets';
+import type { ResolvedArtwork } from '../lib/artwork';
+interface Props { art: ResolvedArtwork; sizes?: string; eager?: boolean; class?: string; reveal?: boolean; settle?: boolean; widths?: number[]; }
+const { art, sizes = '(min-width:1024px) 540px, 90vw', eager = false, reveal = false, settle = false, widths = [480, 720, 1080], class: cls = '' } = Astro.props;
+const w = art.image.width;
+const isSvg = art.image.format === 'svg';
+const usable = isSvg ? [] : widths.filter((x) => x <= w);
+---
+<div class:list={['frame', cls, { settle }]} style={`aspect-ratio:${art.width} / ${art.height}`} data-reveal={reveal ? '' : undefined} data-placeholder={art.isPlaceholder ? '' : undefined}>
+  <Image src={art.image} alt={art.alt} widths={usable.length ? usable : [w]} sizes={sizes} loading={eager ? 'eager' : 'lazy'} fetchpriority={eager ? 'high' : undefined} decoding={eager ? 'sync' : 'async'} />
+  {art.isPlaceholder && <span class="tag">Placeholder</span>}
+</div>

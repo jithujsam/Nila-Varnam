@@ -1,0 +1,21 @@
+---
+import ArtworkFrame from './ArtworkFrame.astro';
+import { HERO_SETTLE_ENABLED } from '../config/motion';
+import type { ResolvedArtwork } from '../lib/artwork';
+interface Props { h1: string; lead: string; primary: { label: string; href: string }; secondary?: { label: string; href: string }; art: ResolvedArtwork; fact?: string; }
+const { h1, lead, primary, secondary, art, fact } = Astro.props;
+---
+<section class="hero">
+  <div class="wrap split">
+    <div>
+      <h1>{h1}</h1>
+      <p class="lead">{lead}</p>
+      <div class="btn-row">
+        <a class="btn btn-primary" href={primary.href}>{primary.label}</a>
+        {secondary && <a class="btn btn-secondary" href={secondary.href}>{secondary.label}</a>}
+      </div>
+      {fact && <p class="fact">{fact}</p>}
+    </div>
+    <div class="art"><ArtworkFrame art={art} eager settle={HERO_SETTLE_ENABLED} sizes="(min-width:1024px) 540px, 90vw" widths={[480, 720, 1080]} /></div>
+  </div>
+</section>

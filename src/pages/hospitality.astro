@@ -1,0 +1,63 @@
+---
+import BaseLayout from '../components/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import Rows from '../components/Rows.astro';
+import Steps from '../components/Steps.astro';
+import Faq from '../components/Faq.astro';
+import Close from '../components/Close.astro';
+import { getPlacement } from '../lib/artwork';
+import { faqHospitality, capacity } from '../data/copy';
+import { crumbs, service, faqLd } from '../lib/seo';
+const art = getPlacement('hospitalityHero');
+const desc = 'Original paintings commissioned for hotels, resorts and restaurants across India. Share your project and receive a proposal from the studio.';
+---
+<BaseLayout path="/hospitality/" title="Custom Artwork for Hotels and Resorts in India" description={desc} jsonLd={[service('Original paintings for hospitality spaces', '/hospitality/', desc), crumbs([['Home', '/'], ['Hospitality', '/hospitality/']]), faqLd(faqHospitality)]}>
+  <Hero h1="Original paintings for hotels, resorts and restaurants" lead="The studio paints original commissions for lobbies, rooms, restaurants and corridors. Share the space and the brief and we will propose what the artist can paint." primary={{ label: 'Discuss a hospitality project', href: '/contact/?type=hospitality' }} secondary={{ label: 'See the gallery', href: '/gallery/' }} art={art} />
+
+  <section class="section alt">
+    <div class="wrap">
+      <div class="section-head"><h2>What we can paint for hospitality spaces</h2><p class="lead" style="margin-top:12px">Sizes, medium and framing are agreed per project.</p></div>
+      <Rows items={[
+        { title: 'Portraits and figure paintings', text: 'Portraits and figure subjects in watercolour, oil or acrylic.' },
+        { title: 'Devotional and religious paintings', text: 'Religious subjects for spaces where they suit the setting.' },
+        { title: 'Other subjects', text: 'Other subjects are discussed with the artist and confirmed before painting.' },
+      ]} />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap split">
+      <h2>What the portfolio shows today</h2>
+      <div>
+        <p class="lead">The paintings in our gallery are portraits and devotional works. They show how the artist handles light, skin tone, fabric and detail.</p>
+        <p>Work for hospitality spaces is made to commission, so we begin with your brief and agree the subject before painting.</p>
+        <a class="link" href="/gallery/">See the gallery</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section stone">
+    <div class="wrap">
+      <div class="section-head"><h2>How a hospitality commission works</h2></div>
+      <Steps items={[
+        { title: 'Brief', text: 'The property, the space, the mood, the size and the number of works.' },
+        { title: 'Proposal', text: 'Subject, medium, size, schedule and cost for your approval.' },
+        { title: 'Painting', text: 'The artist paints, and we manage communication with you.' },
+        { title: 'Delivery', text: 'Packing and delivery are agreed with you before dispatch.' },
+      ]} />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap split">
+      <h2>Sizes, mediums and schedule</h2>
+      <div>
+        <p class="lead">Watercolour, oil, acrylic and sketches.</p>
+        <p>This is a small studio. A project of several large paintings is scheduled across months, and we give the schedule in the proposal.{capacity}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt"><div class="wrap"><div class="section-head"><h2>Questions from hospitality teams</h2></div><Faq items={faqHospitality} /></div></section>
+  <Close h2="Discuss a hospitality project" line="Tell us about the property and the walls you want to fill." label="Discuss a hospitality project" href="/contact/?type=hospitality" />
+</BaseLayout>

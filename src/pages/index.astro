@@ -1,0 +1,63 @@
+---
+import BaseLayout from '../components/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import Rows from '../components/Rows.astro';
+import Steps from '../components/Steps.astro';
+import Faq from '../components/Faq.astro';
+import Close from '../components/Close.astro';
+import ArtworkFrame from '../components/ArtworkFrame.astro';
+import { getPlacement } from '../lib/artwork';
+import { commissionSteps, faqHome, artistLabel } from '../data/copy';
+import { faqLd } from '../lib/seo';
+
+const hero = getPlacement('homeHero');
+const works = getPlacement('homeWorks');
+const artist = getPlacement('artistImage');
+---
+<BaseLayout path="/" current="/" title="NILA VARNAM — Commissioned paintings from Kerala" description="Original paintings commissioned for hotels, designers, corporate gifting and private clients across India, by a self-taught artist with about 30 years of practice." jsonLd={[faqLd(faqHome)]}>
+  <Hero h1="Commissioned paintings from a Kerala art studio" lead="Original portraits, devotional art and other paintings by one self-taught artist with about 30 years of practice, made to commission for businesses and private clients across India." primary={{ label: 'Request a proposal', href: '/contact/?type=general' }} secondary={{ label: 'See the gallery', href: '/gallery/' }} art={hero} fact="Based in Kerala. Working with clients across India." />
+
+  <section class="section alt">
+    <div class="wrap">
+      <div class="section-head"><h2>Who we paint for</h2></div>
+      <Rows items={[
+        { title: 'Hospitality', text: 'Original paintings for hotels, resorts and restaurants.', href: '/hospitality/' },
+        { title: 'Gifting', text: 'Hand-painted gifts for companies and gifting agencies.', href: '/gifting/' },
+        { title: 'Commissions', text: 'Portraits and paintings for private clients.', href: '/commissions/' },
+      ]} />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head"><h2>Paintings from the studio</h2><p class="lead" style="margin-top:12px">Portrait and devotional paintings, shown whole.</p></div>
+      <div class="works three">{works.map((a, i) => <ArtworkFrame art={a} sizes="(min-width:1024px) 380px, (min-width:640px) 45vw, 90vw" widths={[360, 540, 720]} reveal={i === 0} />)}</div>
+      <div class="btn-row"><a class="btn btn-secondary" href="/gallery/">See the gallery</a></div>
+    </div>
+  </section>
+
+  <section class="section stone">
+    <div class="wrap">
+      <div class="section-head"><h2>How a commission works</h2></div>
+      <Steps items={commissionSteps} />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap split">
+      <div>
+        <h2>A self-taught artist with about 30 years of practice</h2>
+        <svg class="stroke" viewBox="0 0 96 10" aria-hidden="true"><path d="M2 6 C 20 1, 40 9, 60 4 S 88 6, 94 3" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" /></svg>
+        <p style="margin-top:24px">{artistLabel} learned by observation, experiment and daily work, and paints watercolour, oil and acrylic, portraits, sketches and religious subjects. Other subjects can be discussed.</p>
+        <a class="link" href="/artist/">Read about the artist</a>
+      </div>
+      <ArtworkFrame art={artist} sizes="(min-width:1024px) 640px, 90vw" widths={[480, 720, 1080]} reveal />
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="wrap"><div class="section-head"><h2>Common questions</h2></div><Faq items={faqHome} /></div>
+  </section>
+
+  <Close h2="Tell us about your project" line="Share a short brief and we will reply with next steps." label="Request a proposal" href="/contact/?type=general" />
+</BaseLayout>

@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../components/BaseLayout.astro';
+import { site } from '../data/site';
+---
+<BaseLayout path="/privacy/" title="Privacy | NILA VARNAM" description="How NILA VARNAM handles the details you send in an enquiry.">
+  <section class="section"><div class="wrap prose">
+    <h1>Privacy</h1>
+    <p class="lead" style="margin-top:16px">This page explains what we do with the details you send through the enquiry form.</p>
+    <h2>What we collect</h2>
+    <p>Only what you type into the form: your name, email address, optional phone or organisation, the type of enquiry and your project brief.</p>
+    <h2>How we use it</h2>
+    <p>We use these details to reply to your enquiry and to prepare a proposal. We do not sell them and we do not add you to marketing lists.</p>
+    <h2>Who receives it</h2>
+    <p>Your enquiry is delivered by email to the studio through an email delivery service. It is not published anywhere.</p>
+    <h2>Cookies and tracking</h2>
+    <p>This website does not use advertising cookies or analytics scripts.</p>
+    <h2>Your choices</h2>
+    <p>You can ask us to correct or delete the details you sent by contacting us {site.email ? <a href={`mailto:${site.email}`}>{site.email}</a> : <a href="/contact/">through the contact form</a>}.</p>
+  </div></section>
+</BaseLayout>

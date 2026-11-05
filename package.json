@@ -1,0 +1,28 @@
+{
+  "name": "nila-varnam",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "preflight": "node scripts/preflight.mjs",
+    "build": "node scripts/preflight.mjs && astro build && node scripts/postbuild-check.mjs",
+    "preview": "astro preview",
+    "check": "astro check",
+    "placeholders": "node scripts/make-placeholders.mjs",
+    "images": "node scripts/make-images.mjs"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.12",
+    "@astrojs/sitemap": "^3.7.4",
+    "@astrojs/vercel": "^11.0.18",
+    "@fontsource-variable/instrument-sans": "^5.3.0",
+    "@fontsource/instrument-serif": "^5.3.0",
+    "astro": "^7.4.5",
+    "sharp": "^0.35.5",
+    "typescript": "^6.0.3"
+  }
+}

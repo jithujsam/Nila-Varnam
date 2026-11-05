@@ -1,5 +1,7 @@
 # NILA VARNAM — MASTER_PROMPT.md
 
+**Update (implementation phase):** the site has now been built from these specifications with temporary, clearly labelled artwork placeholders. The prompt below is updated to match what exists. A fresh session can use it either to continue and finish the site (replace placeholders, add owner facts, deploy) or to rebuild from scratch. Where it says "already exists", inspect the repository first and preserve it.
+
 **How to use:** open a fresh Claude Code session at the repository root and paste everything from `=== BEGIN PROMPT ===` to `=== END PROMPT ===`. The prompt is self-contained apart from the repository's specification files, which it tells the session to read first.
 
 Related: [PROJECT_BLUEPRINT](../PROJECT_BLUEPRINT.md) · [DESIGN](../design/DESIGN.md) · [CONTENT_AND_SEO](../content/CONTENT_AND_SEO.md) · [ANIMATION_SPEC](../design/ANIMATION_SPEC.md) · [REFERENCE_LIBRARY](../design/REFERENCE_LIBRARY.md) · [ARTWORK_INVENTORY](../assets/ARTWORK_INVENTORY.md) · [CONTENT_INPUTS_REQUIRED](../content/CONTENT_INPUTS_REQUIRED.md)
@@ -34,7 +36,7 @@ Then write a 10-line plan in `docs/BUILD_PROGRESS.md` (create it) and keep that 
 
 <ground_rules>
 - Inspect the repository first (`git status`, branches, existing manifests). Preserve anything that already works. At the time of writing the repo contains only documentation, so you choose the stack.
-- **Stack (default, justified in DESIGN/BLUEPRINT):** Astro 5 + TypeScript, static output, `@astrojs/vercel` adapter, `@astrojs/sitemap`, plain CSS with custom properties, Fontsource for self-hosted Instrument Serif and Instrument Sans, `sharp` for image derivatives, vanilla TS for the lightbox and form. If you deviate (for example Next.js App Router), write the reason in docs/BUILD_PROGRESS.md first.
+- **Stack (implemented):** Astro 7 + TypeScript (npm resolved Astro 7 because `@astrojs/vercel` requires it; the earlier draft said Astro 5), static output with `trailingSlash: 'always'`, `@astrojs/vercel` adapter, `@astrojs/sitemap`, plain CSS with custom properties, Fontsource for self-hosted Instrument Serif and Instrument Sans, `sharp` for image derivatives, vanilla TS for the lightbox and form. If you deviate (for example Next.js App Router), write the reason in docs/BUILD_PROGRESS.md first.
 - Keep scope to what is specified. No unrelated refactors, no extra pages, no animation libraries, no CMS, no analytics, no third-party scripts, no ecommerce.
 - Never edit or delete files in `assets/artwork/original/` or `assets/reference/`. Generate derivatives elsewhere.
 - Do not remove or weaken checks, linters or tests to make them pass; fix the cause.
@@ -88,11 +90,21 @@ Create these shared components (Astro components + one small CSS file per compon
 Mobile: bar with wordmark and menu button; full-screen menu sheet ending in the outlined "Request a proposal" button; no fixed bottom action bar; 44px targets.
 </components>
 
+<artwork_system>
+Already implemented; preserve and extend, do not bypass.
+- **One place to edit artwork:** `src/data/artworks.ts` (id, status, enabled, category, order, file, width, height, alt, title, description, medium, size; plus `categories`) and `src/data/placements.ts` (which artwork id fills each hero/home slot). Components never contain image paths or artwork text. Guide: `docs/ARTWORK_GUIDE.md`.
+- **Statuses:** `placeholder` (generated, clearly labelled SVG stand-ins in `src/assets/placeholders/`, preview/local only, visible "Placeholder" tag), `approved` (real, owner-approved; the only status that reaches production), `draft` (never shown).
+- **Production safety, four layers (do not weaken):** (1) `src/lib/artwork.ts` filters by status and throws on a non-approved placement; (2) `scripts/preflight.mjs` fails a production build with no approved artwork, bad placements, or missing env vars; (3) placeholder images are never imported in production (dead branch removed; verify no placeholder file in the build output); (4) `scripts/postbuild-check.mjs` scans the output for placeholder markers or stray `noindex`. Production = `VERCEL_ENV=production` or `BUILD_TARGET=production`. Test them (a production build must fail with only placeholders, and pass with approved fixtures).
+- Never publish an image containing a name, phone number or other personal contact data (`artwork-03` has one). Never overwrite `assets/artwork/original/`. Derivatives: `npm run images -- <original> <name> [cropBottomPx]`.
+- Preview builds are `noindex` and `robots.txt` disallows all; production is indexable.
+</artwork_system>
+
 <content_model>
 Keep content in typed data files, not hard-coded in templates:
 - `src/data/site.ts`: name, tagline, location wording, `contact` object built from env (`PUBLIC_CONTACT_EMAIL?`, `PUBLIC_WHATSAPP_NUMBER?`, `PUBLIC_PHONE?`) so absent values render nothing; `artistName?` (absent → "the artist").
-- `src/data/artworks.ts`: `{ id, file, width, height, category: 'portrait'|'devotional', title?, medium?, size?, alt, status: 'ready'|'needs-clean-file'|'hold' }` seeded from ARTWORK_INVENTORY. Only `ready` works render in production; `artwork-03` has `needs-clean-file` and must not be published until replaced (you may use it in local previews only if the overlay is not visible; simplest: hold it back and design every page to work with three works).
-- `src/data/pages/*.ts`: per-page copy, meta title/description, H1/H2, FAQs from CONTENT_AND_SEO.md.
+- `src/data/artworks.ts` and `src/data/placements.ts`: see <artwork_system>. Real works from ARTWORK_INVENTORY are added only when approved; hold `artwork-03` back until a clean file exists and design every page to work with three works.
+- `src/data/copy.ts`: shared copy, FAQs and the `SHOW_CAPACITY` flag (false until the owner approves publishing the 5–10 paintings-a-month figure).
+- Page copy lives in the page templates and `src/data/copy.ts` and must match CONTENT_AND_SEO.md.
 - Omit any field that is unknown. Never render "TBC", "Untitled" or lorem ipsum.
 </content_model>
 
@@ -115,7 +127,7 @@ Implement ANIMATION_SPEC.md exactly: nothing hidden on first paint; hero paintin
 <form_and_lead_flow>
 - One form on `/contact/` (enquiry type, name, email, phone/WhatsApp optional, organisation/city optional, brief; honeypot + minimum-time field). Microcopy from CONTENT_AND_SEO.md §9.
 - Progressive enhancement: the form is a real `<form method="post" action="/api/enquiry">` that works without JS; with JS it submits by `fetch`, shows inline errors (`aria-describedby`) and a success panel, and never fakes success.
-- `src/pages/api/enquiry.ts` (`export const prerender = false`): validate server-side (types, lengths, email format, honeypot, timing), reject obvious spam, best-effort per-IP rate limit, send an email with Resend's API via `fetch` using `RESEND_API_KEY`, to `ENQUIRY_TO_EMAIL`, from `ENQUIRY_FROM_EMAIL`, subject including the enquiry type; set `Reply-To` to the sender; return JSON; escape all user input in the email HTML; log only non-personal metadata. Redirect non-JS submissions to `/thank-you/`.
+- `src/pages/api/enquiry.ts` (`export const prerender = false`; the route is `/api/enquiry/` with a trailing slash because `trailingSlash` is `always`): validate server-side (types, lengths, email format, honeypot, timing), reject obvious spam, best-effort per-IP rate limit, send an email with Resend's API via `fetch` using `RESEND_API_KEY`, to `ENQUIRY_TO_EMAIL`, from `ENQUIRY_FROM_EMAIL`, subject including the enquiry type; set `Reply-To` to the sender; return JSON; escape all user input in the email HTML; log only non-personal metadata. Redirect non-JS submissions to `/thank-you/`.
 - **Real backend only.** If the three variables are missing: in development, return a clear error and show a visible "enquiries are not configured" notice; in a **production** Vercel build (`VERCEL_ENV === 'production'`) fail the build with an actionable message listing the missing variables. Preview builds may run with a disabled form and a visible developer notice that is not indexed. Never present a success state without a delivered email.
 - No file uploads in v1 (the operator asks for the photograph by reply).
 </form_and_lead_flow>
@@ -164,7 +176,7 @@ npm run lint           # if configured; configure ESLint + Prettier if absent
 npm run build          # must succeed with a complete production env, and fail clearly without one in a production build
 npm run preview        # serve the build for the checks below
 ```
-- Taste Skill checkers against the built output (they need Node 22+ and Chromium; Chromium is at `/opt/pw-browsers/chromium` in the cloud environment): from `.agents/skills/design-taste-frontend`, run `scripts/consistency.mjs`, `assets/layout/check.mjs`, `scripts/shoot.mjs` and `scripts/perf.mjs` per SKILL.md §4 step 6 with `--root dist` (static export), widths 1440, 1024, 820, 768, 390. Apply those checks that fit a **service** site; findings that come from deliberate, documented adaptations in DESIGN §20 (index-list catalogue data, hero settle, opacity-only reveal, outlined nav CTA, segment CTA wording) are reported as "known deviations", not silently ignored.
+- Taste Skill checkers against the built output (Node 22+ and Chromium; as root, Chromium needs `--no-sandbox`, so point `CHROME_PATH` at a tiny wrapper script that execs the browser with that flag; never edit the kit; they write a `.taste-skill` folder into the served root, so delete it from `dist` afterwards). Expected, documented deviations (DESIGN §20 and the implementation report): sections are not forced to exactly 1–2 screens, three button looks (red primary, outlined secondary, ivory primary on teal), the segment-specific CTA wording, the opacity-only image reveal, the preview-only "Placeholder" tag, and kit class-name expectations (`header.nav`, `footer.closing`). Real findings (edge alignment, spill, overflow, contrast) must be fixed. From `.agents/skills/design-taste-frontend`, run `scripts/consistency.mjs`, `assets/layout/check.mjs`, `scripts/shoot.mjs` and `scripts/perf.mjs` per SKILL.md §4 step 6 with `--root dist` (static export), widths 1440, 1024, 820, 768, 390. Apply those checks that fit a **service** site; findings that come from deliberate, documented adaptations in DESIGN §20 (index-list catalogue data, hero settle, opacity-only reveal, outlined nav CTA, segment CTA wording) are reported as "known deviations", not silently ignored.
 - Screenshots at 1440×900, 1024×768, 820×1180, 768×1024 and 390×844 for every route; read each and compare with DESIGN.md. (Playwright + Chromium is preinstalled: `require('playwright')`; do not reinstall it.)
 - Red audit: at each width and several scroll offsets confirm ≤ 1 filled red button in view, red only in the permitted markers (nav current-page bar, chip dot, form error marks), and no red on teal/mocha/kraft grounds.
 - Keyboard walk-through: tab order, skip link, menu, lightbox (Esc, arrows, focus restore), form errors. Axe (or equivalent) with zero serious/critical violations.

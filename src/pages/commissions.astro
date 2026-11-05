@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../components/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import Rows from '../components/Rows.astro';
+import Steps from '../components/Steps.astro';
+import Faq from '../components/Faq.astro';
+import Close from '../components/Close.astro';
+import { getPlacement } from '../lib/artwork';
+import { commissionSteps, faqCommissions } from '../data/copy';
+import { crumbs, service, faqLd } from '../lib/seo';
+const art = getPlacement('commissionsHero');
+const desc = 'Commission a watercolour, oil or acrylic portrait or a religious painting from a self-taught Kerala artist. Send a photograph and a few details.';
+---
+<BaseLayout path="/commissions/" title="Commissioned Portraits and Paintings in India" description={desc} jsonLd={[service('Commissioned portraits and paintings', '/commissions/', desc), crumbs([['Home', '/'], ['Commissions', '/commissions/']]), faqLd(faqCommissions)]}>
+  <Hero h1="Commission a portrait or painting" lead="Send a photograph and a few details. The artist paints portraits, religious subjects and other works in watercolour, oil or acrylic." primary={{ label: 'Commission an artwork', href: '/contact/?type=commission' }} secondary={{ label: 'See the gallery', href: '/gallery/' }} art={art} />
+
+  <section class="section alt">
+    <div class="wrap">
+      <div class="section-head"><h2>What the artist paints</h2></div>
+      <Rows items={[
+        { title: 'Portraits', text: 'People, painted from photographs you send.' },
+        { title: 'Devotional and religious paintings', text: 'Religious subjects painted to commission.' },
+        { title: 'Sketches', text: 'Drawn studies and sketches.' },
+        { title: 'Other subjects', text: 'Discussed with the artist and confirmed before painting.' },
+      ]} />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head"><h2>Watercolour, oil and acrylic</h2><p class="lead" style="margin-top:12px">We advise which medium suits your subject and where it will hang.</p></div>
+      <Rows items={[
+        { title: 'Watercolour', text: 'Transparent washes on paper, well suited to portraits with soft light.' },
+        { title: 'Oil', text: 'Rich colour and a smooth finish on canvas, often chosen for formal and devotional work.' },
+        { title: 'Acrylic', text: 'Strong colour and quick-drying layers on canvas.' },
+      ]} />
+    </div>
+  </section>
+
+  <section class="section stone"><div class="wrap"><div class="section-head"><h2>How a commission works</h2></div><Steps items={commissionSteps} /></div></section>
+
+  <section class="section">
+    <div class="wrap split">
+      <h2>What to send</h2>
+      <ul class="rows send">
+        <li>A clear, high-resolution photograph. A window-lit one is best.</li>
+        <li>The size and orientation you would like, and where it will hang.</li>
+        <li>The medium you prefer, or ask us to advise.</li>
+        <li>The date you need it by.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section alt"><div class="wrap"><div class="section-head"><h2>Questions about commissions</h2></div><Faq items={faqCommissions} /></div></section>
+  <Close h2="Commission an artwork" line="Send a short brief and a photograph when we reply." label="Commission an artwork" href="/contact/?type=commission" />
+</BaseLayout>

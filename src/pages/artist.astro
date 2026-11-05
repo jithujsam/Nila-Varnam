@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../components/BaseLayout.astro';
+import Close from '../components/Close.astro';
+import ArtworkFrame from '../components/ArtworkFrame.astro';
+import { getPlacement } from '../lib/artwork';
+import { artistLabel, capacity } from '../data/copy';
+import { site } from '../data/site';
+import { crumbs } from '../lib/seo';
+const art = getPlacement('artistImage');
+const person = site.artistName ? { '@context': 'https://schema.org', '@type': 'Person', name: site.artistName, jobTitle: 'Artist', worksFor: { '@type': 'Organization', name: site.name } } : null;
+---
+<BaseLayout path="/artist/" title="The Artist — Self-Taught Painter in Kerala" description="About the artist behind NILA VARNAM: self-taught, around 30 years of practice, painting portraits, devotional art and commissioned work in Kerala." jsonLd={[crumbs([['Home', '/'], ['Artist', '/artist/']]), ...(person ? [person] : [])]}>
+  <section class="hero">
+    <div class="wrap split">
+      <div>
+        <h1>A self-taught artist with about 30 years of practice</h1>
+        <svg class="stroke" viewBox="0 0 96 10" aria-hidden="true"><path d="M2 6 C 20 1, 40 9, 60 4 S 88 6, 94 3" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" /></svg>
+        <p class="lead" style="margin-top:24px">{artistLabel} paints from a studio in Kerala and learned by looking closely, trying things and painting continuously.</p>
+      </div>
+      <div class="art"><ArtworkFrame art={art} eager sizes="(min-width:1024px) 540px, 90vw" widths={[480, 720, 1080]} /></div>
+    </div>
+  </section>
+  <section class="section alt">
+    <div class="wrap">
+      <div class="section-head"><h2>How the artist learned</h2></div>
+      <p class="lead">The artist is self-taught. The skill comes from about 30 years of observation, experiment and daily practice.</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="wrap split">
+      <h2>What the artist paints</h2>
+      <p class="lead">Watercolour, oil and acrylic. Portraits, sketches and religious subjects. Other subjects by discussion.</p>
+    </div>
+  </section>
+  <section class="section stone">
+    <div class="wrap split">
+      <h2>How the studio works</h2>
+      <div><p class="lead">The artist paints. The studio’s operator handles enquiries, proposals, schedules and delivery, so that clients have one point of contact.</p><p>It is a small studio, so every project is scheduled with the artist.{capacity}</p></div>
+    </div>
+  </section>
+  <Close h2="Work with the studio" line="Tell us about your project and we will reply with next steps." label="Request a proposal" href="/contact/?type=general" />
+</BaseLayout>

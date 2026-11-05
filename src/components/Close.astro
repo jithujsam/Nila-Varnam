@@ -1,0 +1,10 @@
+---
+interface Props { h2: string; line: string; label: string; href: string; }
+const { h2, line, label, href } = Astro.props;
+---
+<section class="section deep on-teal">
+  <div class="wrap split">
+    <div><h2>{h2}</h2><p class="lead" style="margin-top:16px">{line}</p></div>
+    <div style="align-self:end"><a class="btn btn-primary" href={href}>{label}</a></div>
+  </div>
+</section>

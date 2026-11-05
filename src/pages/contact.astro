@@ -1,0 +1,76 @@
+---
+import BaseLayout from '../components/BaseLayout.astro';
+import { site } from '../data/site';
+import { IS_PRODUCTION } from '../lib/artwork';
+const configured = !!(process.env.RESEND_API_KEY && process.env.ENQUIRY_TO_EMAIL && process.env.ENQUIRY_FROM_EMAIL);
+const types = [['hospitality', 'Hospitality project'], ['gifting', 'Gifting'], ['commission', 'Commission'], ['general', 'Something else']];
+---
+<BaseLayout path="/contact/" title="Request a Project Proposal | NILA VARNAM" description="Send a short brief for a hospitality, gifting or private commission and the studio will reply with next steps." jsonLd={[{ '@context': 'https://schema.org', '@type': 'ContactPage', name: 'Request a proposal', url: new URL('/contact/', site.url).toString() }]}>
+  <section class="section">
+    <div class="wrap split">
+      <div>
+        <h1>Request a proposal</h1>
+        <p class="lead" style="margin-top:16px">Tell us what you need. A short brief is enough; we reply personally.</p>
+        <p class="note" style="margin-top:24px">{site.location}</p>
+        {(site.email || site.whatsapp) && (
+          <div style="margin-top:32px"><h2 style="font-size:28px;margin-bottom:12px">Other ways to reach the studio</h2>
+            {site.email && <p><a class="link" href={`mailto:${site.email}`}>{site.email}</a></p>}
+            {site.whatsapp && <p><a class="btn btn-secondary" href={`https://wa.me/${site.whatsapp}`} rel="noopener">Message on WhatsApp</a></p>}
+          </div>
+        )}
+      </div>
+      <div>
+        {!configured && !IS_PRODUCTION && <p class="dev-note">Developer notice (preview builds only): enquiry delivery is not configured. Set RESEND_API_KEY, ENQUIRY_TO_EMAIL and ENQUIRY_FROM_EMAIL. See docs/DEPLOYMENT.md.</p>}
+        <h2 style="font-size:28px;margin-bottom:24px">Tell us about your project</h2>
+        <form id="enquiry" class="form" method="post" action="/api/enquiry/" novalidate>
+          <fieldset><legend>Enquiry type <span class="req" style="color:var(--red)">*</span></legend>
+            {types.map(([v, l]) => <label class="chip"><input type="radio" name="type" value={v} checked={v === 'general'} required /><span>{l}</span></label>)}
+          </fieldset>
+          <div class="field"><label for="f-name">Your name <span class="req">*</span></label><input id="f-name" name="name" autocomplete="name" required aria-describedby="e-name" /><p class="err" id="e-name" hidden></p></div>
+          <div class="field"><label for="f-email">Email <span class="req">*</span></label><input id="f-email" name="email" type="email" autocomplete="email" required aria-describedby="e-email" /><p class="err" id="e-email" hidden></p></div>
+          <div class="field"><label for="f-phone">Phone or WhatsApp (optional)</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" /></div>
+          <div class="field"><label for="f-org">Organisation or city (optional)</label><input id="f-org" name="organisation" autocomplete="organization" /></div>
+          <div class="field"><label for="f-brief">Project brief <span class="req">*</span></label><textarea id="f-brief" name="brief" rows="5" required aria-describedby="h-brief e-brief"></textarea><p class="hint" id="h-brief">What you need, where it will go, the size you have in mind, and when you need it.</p><p class="err" id="e-brief" hidden></p></div>
+          <div class="hp" aria-hidden="true"><label>Leave this empty <input name="website" tabindex="-1" autocomplete="off" /></label></div>
+          <input type="hidden" name="started" id="f-started" value="" />
+          <div><button class="btn btn-primary" type="submit">Request a proposal</button>
+            <p class="note" style="margin-top:12px">We reply to every enquiry personally. By sending this you agree to us contacting you about your enquiry. <a class="link" href="/privacy/">Privacy</a></p></div>
+          <div class="status" id="status" role="status" aria-live="polite" hidden></div>
+        </form>
+      </div>
+    </div>
+  </section>
+  <script>
+    const form = document.getElementById('enquiry') as HTMLFormElement;
+    const status = document.getElementById('status') as HTMLElement;
+    const started = document.getElementById('f-started') as HTMLInputElement;
+    started.value = String(Date.now());
+    const t = new URLSearchParams(location.search).get('type');
+    if (t) { const r = form.querySelector<HTMLInputElement>(`input[name=type][value="${t}"]`); if (r) r.checked = true; }
+    const rules: Record<string, [string, (v: string) => boolean]> = {
+      name: ['Enter your name.', (v) => v.trim().length > 1],
+      email: ['Enter a valid email address.', (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim())],
+      brief: ['Tell us a little about the project.', (v) => v.trim().length > 9],
+    };
+    const show = (k: string, msg: string | null) => {
+      const el = document.getElementById('e-' + k)!; const inp = form.elements.namedItem(k) as HTMLElement;
+      el.hidden = !msg; el.textContent = msg ?? ''; inp.setAttribute('aria-invalid', msg ? 'true' : 'false');
+    };
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const fd = new FormData(form); let bad: string | null = null;
+      for (const k of Object.keys(rules)) { const ok = rules[k][1](String(fd.get(k) ?? '')); show(k, ok ? null : rules[k][0]); if (!ok && !bad) bad = k; }
+      if (bad) { (form.elements.namedItem(bad) as HTMLElement).focus(); return; }
+      const btn = form.querySelector<HTMLButtonElement>('button[type=submit]')!; btn.disabled = true;
+      try {
+        const res = await fetch(form.action, { method: 'POST', body: fd, headers: { Accept: 'application/json' } });
+        if (!res.ok) throw new Error(String(res.status));
+        form.hidden = true; status.hidden = false; status.textContent = 'Thank you. Your enquiry has been received and we will reply to you personally.';
+        history.replaceState(null, '', '/contact/'); status.setAttribute('tabindex', '-1'); status.focus();
+      } catch {
+        status.hidden = false; btn.disabled = false;
+        status.textContent = 'We could not send your enquiry. Please try again' + (document.querySelector('a[href^="mailto:"]') ? ' or email us using the address on this page.' : ' in a few minutes.');
+      }
+    });
+  </script>
+</BaseLayout>

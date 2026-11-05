@@ -1,0 +1,76 @@
+---
+import '@fontsource/instrument-serif/400.css';
+import '@fontsource/instrument-serif/400-italic.css';
+import '@fontsource-variable/instrument-sans/index.css';
+import '../styles/global.css';
+import Header from './Header.astro';
+import Footer from './Footer.astro';
+import { site } from '../data/site';
+import { IS_PRODUCTION, getPlacement } from '../lib/artwork';
+import { getImage } from 'astro:assets';
+import { REVEAL_ENABLED } from '../config/motion';
+
+interface Props { title: string; description: string; path: string; noindex?: boolean; jsonLd?: object[]; current?: string; }
+const { title, description, path, noindex = false, jsonLd = [], current } = Astro.props;
+const canonical = new URL(path, site.url).toString();
+const robots = noindex || !IS_PRODUCTION ? 'noindex, nofollow' : 'index, follow';
+const social = getPlacement('social');
+const og = await getImage({ src: social.image, width: 1200, format: social.image.format === 'svg' ? undefined : 'jpg' });
+const ogUrl = new URL(og.src, site.url).toString();
+const org = { '@context': 'https://schema.org', '@type': 'Organization', name: site.name, url: site.url, areaServed: 'India', ...(site.email ? { contactPoint: { '@type': 'ContactPoint', email: site.email, contactType: 'customer service' } } : {}) };
+const web = { '@context': 'https://schema.org', '@type': 'WebSite', name: site.name, url: site.url, inLanguage: 'en-IN' };
+---
+<!doctype html>
+<html lang="en-IN" class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content={robots} />
+    <meta name="theme-color" content="#F4EFE3" />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content="en_IN" />
+    <meta property="og:image" content={ogUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <script is:inline define:vars={{ REVEAL_ENABLED }}>
+      document.documentElement.classList.replace('no-js', 'js');
+      if (REVEAL_ENABLED && !matchMedia('(prefers-reduced-motion: reduce)').matches && innerWidth >= 640) {
+        document.documentElement.classList.add('reveal-ready');
+        setTimeout(function () { document.querySelectorAll('[data-reveal]').forEach(function (e) { e.classList.add('is-in'); }); }, 2500);
+      }
+    </script>
+    {[org, web, ...jsonLd].map((d) => <script type="application/ld+json" set:html={JSON.stringify(d)} />)}
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <Header current={current ?? path} />
+    <main id="main"><slot /></main>
+    <Footer />
+    <script>
+      const btn = document.querySelector<HTMLButtonElement>('.menu-btn');
+      const sheet = document.getElementById('menu');
+      btn?.addEventListener('click', () => {
+        const open = sheet?.dataset.open !== 'true';
+        if (sheet) sheet.dataset.open = String(open);
+        btn.setAttribute('aria-expanded', String(open));
+        document.body.style.overflow = open ? 'hidden' : '';
+      });
+      sheet?.addEventListener('click', (e) => {
+        if ((e.target as HTMLElement).closest('a')) { sheet.dataset.open = 'false'; btn?.setAttribute('aria-expanded', 'false'); document.body.style.overflow = ''; }
+      });
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && sheet?.dataset.open === 'true') btn?.click(); });
+      const items = document.querySelectorAll('[data-reveal]');
+      if (document.documentElement.classList.contains('reveal-ready') && 'IntersectionObserver' in window) {
+        const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } }), { threshold: 0.2, rootMargin: '0px 0px -10% 0px' });
+        items.forEach((i) => io.observe(i));
+      }
+    </script>
+  </body>
+</html>
