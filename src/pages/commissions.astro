@@ -1,6 +1,8 @@
 ---
 import BaseLayout from '../components/BaseLayout.astro';
-import Hero from '../components/Hero.astro';
+import Threshold from '../components/Threshold.astro';
+import Plate from '../components/Plate.astro';
+import Lightbox from '../components/Lightbox.astro';
 import Rows from '../components/Rows.astro';
 import Steps from '../components/Steps.astro';
 import Faq from '../components/Faq.astro';
@@ -9,20 +11,24 @@ import { getPlacement } from '../lib/artwork';
 import { commissionSteps, faqCommissions } from '../data/copy';
 import { crumbs, service, faqLd } from '../lib/seo';
 const art = getPlacement('commissionsHero');
+const interlude = getPlacement('commissionsInterlude');
 const desc = 'Commission a watercolour, oil or acrylic portrait or a religious painting from a self-taught Kerala artist. Send a photograph and a few details.';
 ---
 <BaseLayout path="/commissions/" title="Commissioned Portraits and Paintings in India" description={desc} jsonLd={[service('Commissioned portraits and paintings', '/commissions/', desc), crumbs([['Home', '/'], ['Commissions', '/commissions/']]), faqLd(faqCommissions)]}>
-  <Hero h1="Commission a portrait or painting" lead="Send a photograph and a few details. The artist paints portraits, religious subjects and other works in watercolour, oil or acrylic." primary={{ label: 'Commission an artwork', href: '/contact/?type=commission' }} secondary={{ label: 'See the gallery', href: '/gallery/' }} art={art} />
+  <Threshold variant="left" h1="Commission a portrait or painting" lead="Send a photograph and a few details. The artist paints portraits, religious subjects and other works in watercolour, oil or acrylic." primary={{ label: 'Commission an artwork', href: '/contact/?type=commission' }} secondary={{ label: 'See the gallery', href: '/gallery/' }} art={art} />
 
-  <section class="section alt">
-    <div class="wrap">
-      <div class="section-head"><h2>What the artist paints</h2></div>
-      <Rows items={[
-        { title: 'Portraits', text: 'People, painted from photographs you send.' },
-        { title: 'Devotional and religious paintings', text: 'Religious subjects painted to commission.' },
-        { title: 'Sketches', text: 'Drawn studies and sketches.' },
-        { title: 'Other subjects', text: 'Discussed with the artist and confirmed before painting.' },
-      ]} />
+  <section class="editorial">
+    <div class="wrap hang rooms">
+      <div style="grid-column:1 / -1" class="pf-text">
+        <div class="section-head"><h2>What the artist paints</h2></div>
+        <Rows items={[
+          { title: 'Portraits', text: 'People, painted from photographs you send.' },
+          { title: 'Devotional and religious paintings', text: 'Religious subjects painted to commission.' },
+          { title: 'Sketches', text: 'Drawn studies and sketches.' },
+          { title: 'Other subjects', text: 'Discussed with the artist and confirmed before painting.' },
+        ]} />
+      </div>
+      {interlude && <Plate art={interlude} size="l" col="2 / span 5" mAlign="left" reveal />}
     </div>
   </section>
 
@@ -53,4 +59,5 @@ const desc = 'Commission a watercolour, oil or acrylic portrait or a religious p
 
   <section class="section alt"><div class="wrap"><div class="section-head"><h2>Questions about commissions</h2></div><Faq items={faqCommissions} /></div></section>
   <Close h2="Commission an artwork" line="Send a short brief and a photograph when we reply." label="Commission an artwork" href="/contact/?type=commission" />
+  <Lightbox />
 </BaseLayout>

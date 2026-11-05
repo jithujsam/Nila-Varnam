@@ -11,6 +11,7 @@ Navigation and decision document for the whole project.
 | Animation | [docs/design/ANIMATION_SPEC.md](design/ANIMATION_SPEC.md) | motion language and limits |
 | References | [docs/design/REFERENCE_LIBRARY.md](design/REFERENCE_LIBRARY.md) | moodboards, Taste Skill, prompt guide, external reference status |
 | Artwork | [docs/assets/ARTWORK_INVENTORY.md](assets/ARTWORK_INVENTORY.md) | the four real paintings and their issues |
+| Exhibition concept (central direction) | [docs/design/EXHIBITION_CONCEPT.md](design/EXHIBITION_CONCEPT.md) | the site as an exhibition that functions as a business: sequence, plates, rooms, what is avoided |
 | Owner inputs | [docs/content/CONTENT_INPUTS_REQUIRED.md](content/CONTENT_INPUTS_REQUIRED.md) | facts and assets still needed |
 
 Original briefs: `01_CLAUDE_CODE_PROMPT_GENERATOR.md` (root, the fuller version), `planning/01_CLAUDE_CODE_PROMPT_GENERATOR.md` (shorter variant), `00_README_FIRST.md`, `02_REFERENCE_COLOUR_AND_ART_DIRECTION.md`. Where they differ, the root `01_…` file and the user's chat instructions were followed; I did not diff every line of the two variants, but their deliverables and rules are consistent (note: the root file spells the inputs file path `docs/CONTENT/…`; the shorter variant and this project use `docs/content/CONTENT_INPUTS_REQUIRED.md`).

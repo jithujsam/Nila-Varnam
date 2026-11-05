@@ -1,6 +1,8 @@
 ---
 import BaseLayout from '../components/BaseLayout.astro';
-import Hero from '../components/Hero.astro';
+import Threshold from '../components/Threshold.astro';
+import Plate from '../components/Plate.astro';
+import Lightbox from '../components/Lightbox.astro';
 import Rows from '../components/Rows.astro';
 import Steps from '../components/Steps.astro';
 import Faq from '../components/Faq.astro';
@@ -9,10 +11,11 @@ import { getPlacement } from '../lib/artwork';
 import { faqHospitality, capacity } from '../data/copy';
 import { crumbs, service, faqLd } from '../lib/seo';
 const art = getPlacement('hospitalityHero');
+const interlude = getPlacement('hospitalityInterlude');
 const desc = 'Original paintings commissioned for hotels, resorts and restaurants across India. Share your project and receive a proposal from the studio.';
 ---
 <BaseLayout path="/hospitality/" title="Custom Artwork for Hotels and Resorts in India" description={desc} jsonLd={[service('Original paintings for hospitality spaces', '/hospitality/', desc), crumbs([['Home', '/'], ['Hospitality', '/hospitality/']]), faqLd(faqHospitality)]}>
-  <Hero h1="Original paintings for hotels, resorts and restaurants" lead="The studio paints original commissions for lobbies, rooms, restaurants and corridors. Share the space and the brief and we will propose what the artist can paint." primary={{ label: 'Discuss a hospitality project', href: '/contact/?type=hospitality' }} secondary={{ label: 'See the gallery', href: '/gallery/' }} art={art} />
+  <Threshold variant="wide" h1="Original paintings for hotels, resorts and restaurants" lead="The studio paints original commissions for lobbies, rooms, restaurants and corridors. Share the space and the brief and we will propose what the artist can paint." primary={{ label: 'Discuss a hospitality project', href: '/contact/?type=hospitality' }} secondary={{ label: 'See the gallery', href: '/gallery/' }} art={art} />
 
   <section class="section alt">
     <div class="wrap">
@@ -25,14 +28,15 @@ const desc = 'Original paintings commissioned for hotels, resorts and restaurant
     </div>
   </section>
 
-  <section class="section">
-    <div class="wrap split">
-      <h2>What the portfolio shows today</h2>
-      <div>
-        <p class="lead">The paintings in our gallery are portraits and devotional works. They show how the artist handles light, skin tone, fabric and detail.</p>
-        <p>Work for hospitality spaces is made to commission, so we begin with your brief and agree the subject before painting.</p>
+  <section class="editorial">
+    <div class="wrap hang rooms">
+      <div style="grid-column:1 / -1" class="pf-text">
+        <h2>What the portfolio shows today</h2>
+        <p class="lede" style="margin-top:24px">The paintings in our gallery are portraits and devotional works. They show how the artist handles light, skin tone, fabric and detail.</p>
+        <p style="margin-top:24px">Work for hospitality spaces is made to commission, so we begin with your brief and agree the subject before painting.</p>
         <a class="link" href="/gallery/">See the gallery</a>
       </div>
+      {interlude && <Plate art={interlude} size="l" col="7 / span 5" mAlign="right" reveal />}
     </div>
   </section>
 
@@ -60,4 +64,5 @@ const desc = 'Original paintings commissioned for hotels, resorts and restaurant
 
   <section class="section alt"><div class="wrap"><div class="section-head"><h2>Questions from hospitality teams</h2></div><Faq items={faqHospitality} /></div></section>
   <Close h2="Discuss a hospitality project" line="Tell us about the property and the walls you want to fill." label="Discuss a hospitality project" href="/contact/?type=hospitality" />
+  <Lightbox />
 </BaseLayout>

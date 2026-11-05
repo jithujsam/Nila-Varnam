@@ -54,7 +54,7 @@ export function getById(id: string): ResolvedArtwork {
   return fallback;
 }
 
-export function getPlacement<K extends keyof typeof placements>(key: K): K extends `${string}Works` ? ResolvedArtwork[] : ResolvedArtwork {
+export function getPlacement<K extends keyof typeof placements>(key: K): (typeof placements)[K] extends readonly string[] ? ResolvedArtwork[] : ResolvedArtwork {
   const v = placements[key] as unknown;
   return (Array.isArray(v) ? v.map((id: string) => getById(id)) : getById(v as string)) as never;
 }

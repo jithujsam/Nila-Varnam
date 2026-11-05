@@ -1,7 +1,8 @@
 ---
 import BaseLayout from '../components/BaseLayout.astro';
 import Close from '../components/Close.astro';
-import ArtworkFrame from '../components/ArtworkFrame.astro';
+import Plate from '../components/Plate.astro';
+import Lightbox from '../components/Lightbox.astro';
 import { getPlacement } from '../lib/artwork';
 import { artistLabel, capacity } from '../data/copy';
 import { site } from '../data/site';
@@ -10,14 +11,13 @@ const art = getPlacement('artistImage');
 const person = site.artistName ? { '@context': 'https://schema.org', '@type': 'Person', name: site.artistName, jobTitle: 'Artist', worksFor: { '@type': 'Organization', name: site.name } } : null;
 ---
 <BaseLayout path="/artist/" title="The Artist — Self-Taught Painter in Kerala" description="About the artist behind NILA VARNAM: self-taught, around 30 years of practice, painting portraits, devotional art and commissioned work in Kerala." jsonLd={[crumbs([['Home', '/'], ['Artist', '/artist/']]), ...(person ? [person] : [])]}>
-  <section class="hero">
-    <div class="wrap split">
-      <div>
+  <section class="threshold threshold--left">
+    <div class="wrap hang">
+      <div class="t-text">
         <h1>A self-taught artist with about 30 years of practice</h1>
-        <svg class="stroke" viewBox="0 0 96 10" aria-hidden="true"><path d="M2 6 C 20 1, 40 9, 60 4 S 88 6, 94 3" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" /></svg>
-        <p class="lead" style="margin-top:24px">{artistLabel} paints from a studio in Kerala and learned by looking closely, trying things and painting continuously.</p>
+        <p class="lead">{artistLabel} paints from a studio in Kerala and learned by looking closely, trying things and painting continuously.</p>
       </div>
-      <div class="art"><ArtworkFrame art={art} eager sizes="(min-width:1024px) 540px, 90vw" widths={[480, 720, 1080]} /></div>
+      <Plate art={art} size="xl" col="1 / span 5" eager settle class="t-art" />
     </div>
   </section>
   <section class="section alt">
@@ -39,4 +39,5 @@ const person = site.artistName ? { '@context': 'https://schema.org', '@type': 'P
     </div>
   </section>
   <Close h2="Work with the studio" line="Tell us about your project and we will reply with next steps." label="Request a proposal" href="/contact/?type=general" />
+  <Lightbox />
 </BaseLayout>

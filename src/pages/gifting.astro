@@ -1,6 +1,8 @@
 ---
 import BaseLayout from '../components/BaseLayout.astro';
-import Hero from '../components/Hero.astro';
+import Threshold from '../components/Threshold.astro';
+import Plate from '../components/Plate.astro';
+import Lightbox from '../components/Lightbox.astro';
 import Rows from '../components/Rows.astro';
 import Steps from '../components/Steps.astro';
 import Faq from '../components/Faq.astro';
@@ -9,10 +11,12 @@ import { getPlacement } from '../lib/artwork';
 import { faqGifting, capacity } from '../data/copy';
 import { crumbs, service, faqLd } from '../lib/seo';
 const art = getPlacement('giftingHero');
+const art2 = getPlacement('giftingSecond');
+const interlude = getPlacement('giftingInterlude');
 const desc = 'Hand-painted portraits and original paintings as corporate and executive gifts. Tell us the occasion and quantity and we will propose what is possible.';
 ---
 <BaseLayout path="/gifting/" title="Corporate Art Gifting in India — Hand-Painted Gifts" description={desc} jsonLd={[service('Hand-painted corporate gifts', '/gifting/', desc), crumbs([['Home', '/'], ['Gifting', '/gifting/']]), faqLd(faqGifting)]}>
-  <Hero h1="Hand-painted gifts for companies and gifting agencies" lead="A portrait or painting made by hand is a gift that is personal and made once. Tell us the occasion and the quantity and we will propose what is possible." primary={{ label: 'Request a gifting proposal', href: '/contact/?type=gifting' }} secondary={{ label: 'See the gallery', href: '/gallery/' }} art={art} />
+  <Threshold variant="pair" h1="Hand-painted gifts for companies and gifting agencies" lead="A portrait or painting made by hand is a gift that is personal and made once. Tell us the occasion and the quantity and we will propose what is possible." primary={{ label: 'Request a gifting proposal', href: '/contact/?type=gifting' }} secondary={{ label: 'See the gallery', href: '/gallery/' }} art={art} art2={art2} />
 
   <section class="section alt">
     <div class="wrap">
@@ -25,13 +29,14 @@ const desc = 'Hand-painted portraits and original paintings as corporate and exe
     </div>
   </section>
 
-  <section class="section">
-    <div class="wrap split">
-      <h2>Volume and schedule</h2>
-      <div>
-        <p class="lead">This is a small studio, so a gifting project suits a small number of meaningful gifts rather than hundreds.</p>
-        <p>Tell us the quantity and the date and we will say plainly what fits.{capacity}</p>
+  <section class="editorial">
+    <div class="wrap hang rooms">
+      <div style="grid-column:1 / -1" class="pf-text">
+        <h2>Volume and schedule</h2>
+        <p class="lede" style="margin-top:24px">This is a small studio, so a gifting project suits a small number of meaningful gifts rather than hundreds.</p>
+        <p style="margin-top:24px">Tell us the quantity and the date and we will say plainly what fits.{capacity}</p>
       </div>
+      {interlude && <Plate art={interlude} size="m" col="8 / span 4" mAlign="right" reveal />}
     </div>
   </section>
 
@@ -49,4 +54,5 @@ const desc = 'Hand-painted portraits and original paintings as corporate and exe
 
   <section class="section alt"><div class="wrap"><div class="section-head"><h2>Questions about gifting</h2></div><Faq items={faqGifting} /></div></section>
   <Close h2="Request a gifting proposal" line="Tell us the occasion, the quantity and the date." label="Request a gifting proposal" href="/contact/?type=gifting" />
+  <Lightbox />
 </BaseLayout>

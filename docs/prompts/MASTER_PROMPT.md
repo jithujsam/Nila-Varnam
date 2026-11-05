@@ -23,6 +23,7 @@ The earlier phase produced seven specification documents and committed the real 
 <read_first>
 Read all of these completely before writing any code, in this order (they are independent, so read them in parallel):
 1. docs/PROJECT_BLUEPRINT.md
+1a. docs/design/EXHIBITION_CONCEPT.md (central creative direction: the website is an art exhibition that functions as a business; it overrides conflicting layout in other documents)
 2. docs/design/DESIGN.md
 3. docs/content/CONTENT_AND_SEO.md
 4. docs/design/ANIMATION_SPEC.md
@@ -73,6 +74,10 @@ Implement every route; none may be a stub.
 Copy for each page is in CONTENT_AND_SEO.md §6–§11. Use it verbatim unless a "[OWNER INPUT]" or "[PROVISIONAL]" marker says otherwise; resolve those with the specified fallback.
 </routes>
 
+<exhibition_direction>
+The site is an exhibition delivered by the website itself (no physical show is implied; never invent exhibition labels, dates, venues, clients or installations). Implemented as: Threshold (page entrance: variants right, wide, pair, left), Plate (one artwork at scale xl/l/m/s on a 12-column Hang, opens the shared Lightbox), rooms (Portraits, Devotional) separated by changes of ground and a wall statement, text-led commissioning Lines instead of service cards, and one Lightbox that walks the whole exhibition. Home sequence: entrance, Portraits room, wall text, commissioning room (deep teal), Devotional room, close. Avoid repeated service cards, uniform 3-column grids, captions or buttons under artworks, and a biography more prominent than artwork. See docs/design/EXHIBITION_CONCEPT.md.
+</exhibition_direction>
+
 <design_rules_summary>
 These restate DESIGN.md so nothing is missed; DESIGN.md is authoritative.
 - Tokens: `--teal-950 #052F31`, `--teal-900 #08494B`, `--teal-700 #0D6B6E`, `--teal-100 #E3EEEC`, `--ivory #F4EFE3` (page ground), `--paper #FBF9F2`, `--stone #D5D0C4`, `--kraft #C39A6B` (decorative only), `--kraft-deep #8A6234`, `--mocha #5B4636`, `--taupe #6B6054`, `--ink #2A2118`, `--red #B3261E`, `--red-press #9C2019`.
@@ -86,7 +91,7 @@ These restate DESIGN.md so nothing is missed; DESIGN.md is authoritative.
 
 <components>
 Create these shared components (Astro components + one small CSS file per component or a shared token sheet):
-`BaseLayout` (head, metadata, skip link, header, footer), `Header` (wordmark, 5 links, outlined CTA, mobile sheet, current page), `Footer` (teal-950, columns, legal row), `Button` (variants: primary red, primary-on-teal ivory, secondary outlined, link), `Hero` (split), `Section` (one/two-screen box, `--h`), `Rows` (list with 1px rules), `Steps` (numbered rows), `ArtworkFrame` (contained image, ratio), `Gallery`, `Lightbox`, `Faq` (all answers open), `EnquiryForm`, `Prose`, `JsonLd`, `Seo`.
+`BaseLayout` (head, metadata, skip link, header, footer), `Header` (wordmark, 5 links, outlined CTA, mobile sheet, current page), `Footer` (teal-950, columns, legal row), `Button` (variants: primary red, primary-on-teal ivory, secondary outlined, link), `Threshold` (entrance; replaces the old split `Hero`), `Plate`, `Lightbox`, `Wall`, `Lines`, `Section` (one/two-screen box, `--h`), `Rows` (list with 1px rules), `Steps` (numbered rows), `ArtworkFrame` (contained image, ratio), `Gallery`, `Lightbox`, `Faq` (all answers open), `EnquiryForm`, `Prose`, `JsonLd`, `Seo`.
 Mobile: bar with wordmark and menu button; full-screen menu sheet ending in the outlined "Request a proposal" button; no fixed bottom action bar; 44px targets.
 </components>
 

@@ -1,20 +1,55 @@
 ---
 import BaseLayout from '../components/BaseLayout.astro';
-import Gallery from '../components/Gallery.astro';
+import Plate from '../components/Plate.astro';
+import Lightbox from '../components/Lightbox.astro';
 import Close from '../components/Close.astro';
-import { hasPlaceholders, getArtworks } from '../lib/artwork';
+import { getCategories, getArtworks, hasPlaceholders } from '../lib/artwork';
 import { crumbs } from '../lib/seo';
+
+const groups = getCategories();
 const count = getArtworks().length;
+// Hanging sequence: scale, position and rhythm vary from work to work (landscapes hang wide).
+const hangs = [
+  { size: 'xl', col: '1 / span 6', align: 'start', m: 'left' },
+  { size: 'm', col: '9 / span 4', align: 'end', m: 'right' },
+  { size: 'l', col: '3 / span 5', align: 'start', m: 'center', drop: '96px' },
+  { size: 's', col: '10 / span 3', align: 'center', m: 'right' },
+  { size: 'l', col: '7 / span 5', align: 'start', m: 'right', drop: '64px' },
+  { size: 'm', col: '2 / span 4', align: 'end', m: 'left' },
+] as const;
+let n = 0;
+const place = (a: { width: number; height: number }) => {
+  if (a.width > a.height * 1.05) return { size: 'l', col: '2 / span 10', align: 'start', m: 'center' } as const;
+  return hangs[n++ % hangs.length];
+};
 ---
 <BaseLayout path="/gallery/" title="Gallery — Portrait and Devotional Paintings" description="Portrait and devotional paintings by the NILA VARNAM artist, photographed whole. Open any work to see it larger." jsonLd={[crumbs([['Home', '/'], ['Gallery', '/gallery/']])]}>
-  <section class="section" style="padding-bottom:0">
-    <div class="wrap"><div class="section-head" style="margin-bottom:0">
-      <h1>Gallery of paintings</h1>
-      <p class="lead" style="margin-top:16px">Portrait and devotional paintings, photographed whole. Open a work to see it larger.</p>
-      {!hasPlaceholders && count < 8 && <p class="note">More work is added as it is photographed.</p>}
-    </div></div>
+  <section class="room" style="padding-bottom:0">
+    <div class="wrap">
+      <div class="room-head" style="margin-bottom:0"><h1 style="font-size:clamp(40px,7vw+4px,96px);line-height:.98;grid-column:1 / span 8">Gallery of paintings</h1><p>Open any painting to see it larger.</p></div>
+    </div>
   </section>
-  <Gallery />
-  <section class="section alt"><div class="wrap"><h2>Want a painting like one of these?</h2><div class="btn-row"><a class="btn btn-secondary" href="/contact/?type=commission">Commission something similar</a></div></div></section>
+
+  {groups.map((g, gi) => (
+    <section class:list={['room', { deep: gi === 1 && false }]} id={g.id} aria-labelledby={`h-${g.id}`}>
+      <div class="wrap">
+        <div class="room-head"><h2 id={`h-${g.id}`}>{g.label}</h2>{g.intro && <p>{g.intro}</p>}</div>
+        <div class="hang rooms">
+          {g.works.map((a, i) => { const h = place(a); return (
+            <Plate art={a} size={h.size} col={h.col} align={h.align} mAlign={h.m} drop={'drop' in h ? h.drop : undefined} eager={gi === 0 && i === 0} reveal={!(gi === 0 && i === 0)} />
+          ); })}
+        </div>
+        {g.works.some((a) => a.title || a.medium || a.size) && (
+          <ul class="index">
+            {g.works.map((a) => (a.title || a.medium || a.size) && <li><span class="t">{a.title}</span>{a.medium && <span class="m">{a.medium}</span>}{a.size && <span class="m">{a.size}</span>}</li>)}
+          </ul>
+        )}
+      </div>
+    </section>
+  ))}
+
+  {!hasPlaceholders && count < 8 && <section class="wall-text"><div class="wrap"><p class="note">More work is added as it is photographed.</p></div></section>}
+  <section class="wall-text"><div class="wrap"><p class="statement">Want a painting like one of these?</p><a class="link" href="/contact/?type=commission">Commission something similar</a></div></section>
   <Close h2="Request a proposal" line="Tell us about your project and we will reply with next steps." label="Request a proposal" href="/contact/?type=general" />
+  <Lightbox />
 </BaseLayout>

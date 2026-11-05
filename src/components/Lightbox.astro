@@ -1,38 +1,13 @@
 ---
 import { getImage } from 'astro:assets';
-import ArtworkFrame from './ArtworkFrame.astro';
-import { getCategories } from '../lib/artwork';
-
-const groups = getCategories();
-const flat = groups.flatMap((g) => g.works);
+import { getArtworks } from '../lib/artwork';
+// One viewer for the whole exhibition: any element with data-lb="<artwork id>" opens it; prev/next walk every published work.
+const flat = getArtworks();
 const big = await Promise.all(flat.map(async (a) => {
-  const w = Math.min(1400, a.image.width);
-  const img = await getImage({ src: a.image, width: w });
-  return { id: a.id, src: img.src, w: img.attributes.width, h: img.attributes.height };
+  const img = await getImage({ src: a.image, width: Math.min(1400, a.image.width) });
+  return { id: a.id, src: img.src, w: img.attributes.width, h: img.attributes.height, alt: a.alt, title: a.title ?? '', description: a.description ?? '', meta: [a.medium, a.size].filter(Boolean).join(' · ') };
 }));
-const bigById = Object.fromEntries(big.map((b) => [b.id, b]));
-let n = -1;
 ---
-{groups.map((g) => (
-  <section class="section" id={g.id}>
-    <div class="wrap">
-      <div class="section-head"><h2>{g.label}</h2>{g.intro && <p class="lead" style="margin-top:12px">{g.intro}</p>}</div>
-      <div class="works gal">
-        {g.works.map((a) => { n += 1; return (
-          <button type="button" class="work" data-lb={n} aria-label={`Open ${a.title ?? a.alt}`}>
-            <ArtworkFrame art={a} eager={n === 0} sizes="(min-width:1280px) 300px, (min-width:640px) 45vw, 90vw" widths={[360, 540, 720]} />
-          </button>
-        ); })}
-      </div>
-      <ul class="index">
-        {g.works.map((a) => (
-          (a.title || a.medium || a.size) && <li><span class="t">{a.title}</span>{a.medium && <span class="m">{a.medium}</span>}{a.size && <span class="m">{a.size}</span>}</li>
-        ))}
-      </ul>
-    </div>
-  </section>
-))}
-
 <dialog class="lb" id="lb" aria-label="Painting viewer">
   <div class="lb-bar">
     <div style="display:flex;gap:8px;align-items:center">
@@ -47,12 +22,10 @@ let n = -1;
     <div class="lb-text"><h2></h2><p class="desc"></p><p class="meta note"></p><a class="btn btn-secondary" href="/contact/?type=commission">Commission something like this</a></div>
   </div>
 </dialog>
-
-<script type="application/json" id="lb-data" set:html={JSON.stringify(flat.map((a) => ({ id: a.id, src: bigById[a.id].src, w: bigById[a.id].w, h: bigById[a.id].h, alt: a.alt, title: a.title ?? '', description: a.description ?? '', meta: [a.medium, a.size].filter(Boolean).join(" · ") })))} />
-
+<script type="application/json" id="lb-data" set:html={JSON.stringify(big)} />
 <script>
   const dlg = document.getElementById('lb') as HTMLDialogElement | null;
-  const data: { src: string; w: number; h: number; alt: string; title: string; description: string; meta: string }[] = JSON.parse(document.getElementById('lb-data')?.textContent ?? '[]');
+  const data: { id: string; src: string; w: number; h: number; alt: string; title: string; description: string; meta: string }[] = JSON.parse(document.getElementById('lb-data')?.textContent ?? '[]');
   if (dlg && data.length) {
     const img = dlg.querySelector('img') as HTMLImageElement;
     const h2 = dlg.querySelector('h2') as HTMLElement;
@@ -75,7 +48,9 @@ let n = -1;
     };
     const go = (d: number) => { i = (i + d + data.length) % data.length; render(); };
     document.querySelectorAll<HTMLElement>('[data-lb]').forEach((b) => b.addEventListener('click', () => {
-      opener = b; i = Number(b.dataset.lb); render(true);
+      const idx = data.findIndex((d) => d.id === b.dataset.lb);
+      if (idx < 0) return;
+      opener = b; i = idx; render(true);
       dlg.showModal(); document.body.style.overflow = 'hidden';
       (dlg.querySelector('[data-close]') as HTMLElement).focus();
     }));

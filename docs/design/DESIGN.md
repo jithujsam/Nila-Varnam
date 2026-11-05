@@ -4,6 +4,8 @@
 
 Related documents: [PROJECT_BLUEPRINT](../PROJECT_BLUEPRINT.md) · [MASTER_PROMPT](../prompts/MASTER_PROMPT.md) · [CONTENT_AND_SEO](../content/CONTENT_AND_SEO.md) · [ANIMATION_SPEC](ANIMATION_SPEC.md) · [REFERENCE_LIBRARY](REFERENCE_LIBRARY.md) · [ARTWORK_INVENTORY](../assets/ARTWORK_INVENTORY.md) · [CONTENT_INPUTS_REQUIRED](../content/CONTENT_INPUTS_REQUIRED.md)
 
+**Creative direction (owner, supersedes earlier layout decisions):** the site is an art exhibition that functions as a business. Composition, page sequence and component vocabulary are defined in [EXHIBITION_CONCEPT](EXHIBITION_CONCEPT.md); where it differs from §9 (hero split), §13 (gallery grid) or §14 (rows/steps on every page), the exhibition concept wins. Colours, type, red rules, accessibility and the placeholder rules in this document are unchanged.
+
 If any document disagrees with this one on a visual decision, this one wins.
 
 ---

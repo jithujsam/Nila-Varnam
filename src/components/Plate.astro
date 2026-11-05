@@ -1,0 +1,28 @@
+---
+import ArtworkFrame from './ArtworkFrame.astro';
+import type { ResolvedArtwork } from '../lib/artwork';
+interface Props {
+  art: ResolvedArtwork;
+  /** scale of the hung work */
+  size?: 'xl' | 'l' | 'm' | 's';
+  /** 12-column placement on desktop, e.g. "1 / span 6" */
+  col?: string;
+  /** vertical alignment inside its row */
+  align?: 'start' | 'end' | 'center';
+  /** phone alignment */
+  mAlign?: 'left' | 'right' | 'center';
+  /** extra top space on desktop (CSS length) */
+  drop?: string;
+  eager?: boolean; reveal?: boolean; settle?: boolean; class?: string;
+}
+const { art, size = 'l', col, align = 'start', mAlign = 'left', drop, eager = false, reveal = false, settle = false, class: cls = '' } = Astro.props;
+const land = art.width > art.height * 1.05;
+const sizes = land ? '(min-width:1024px) 62vw, 92vw' : size === 'xl' ? '(min-width:1024px) 640px, 92vw' : size === 'l' ? '(min-width:1024px) 520px, 90vw' : size === 'm' ? '(min-width:1024px) 400px, 76vw' : '(min-width:1024px) 280px, 56vw';
+const widths = land ? [720, 1080, 1440, 2000] : [360, 540, 720, 1080, 1440];
+const style = [`--ar:${(art.width / art.height).toFixed(4)}`, col ? `--col:${col}` : '', drop ? `--drop:${drop}` : ''].filter(Boolean).join(';');
+---
+<figure class:list={['plate', `plate--${size}`, `m-${mAlign}`, `a-${align}`, { land }, cls]} style={style || undefined}>
+  <button type="button" class="plate-btn" data-lb={art.id} aria-label={`View ${art.title ?? 'painting'} larger`}>
+    <ArtworkFrame art={art} sizes={sizes} widths={widths} eager={eager} reveal={reveal} settle={settle} class="bare" />
+  </button>
+</figure>

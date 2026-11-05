@@ -114,6 +114,8 @@ Titles ≤ 60 characters, descriptions ≤ 155. Brand suffix " | NILA VARNAM" om
 
 Copy is intentionally short per screen. `{ARTIST}` = the owner's public name when supplied; until then use "the artist". Square-bracket text is a build instruction, not copy.
 
+> **Exhibition update:** the Home page was recomposed (see EXHIBITION_CONCEPT). Its H1 and hero lead stand; the "Who we paint for" rows became the text-led commissioning lines; process steps, FAQ and the biography block were removed from Home (they remain on the service and Artist pages). Home no longer carries `FAQPage` markup.
+
 ### 7.1 Home
 
 **Screen 1 (hero)**
