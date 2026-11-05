@@ -11,7 +11,7 @@ const art = getPlacement('artistEntrance');
 const person = site.artistName ? { '@context': 'https://schema.org', '@type': 'Person', name: site.artistName, jobTitle: 'Artist', worksFor: { '@type': 'Organization', name: site.name } } : null;
 ---
 <BaseLayout path="/artist/" title="The Artist — Self-Taught Painter in Kerala" description="About the artist behind NILA VARNAM: self-taught, around 30 years of practice, painting portraits, devotional art and commissioned work in Kerala." jsonLd={[crumbs([['Home', '/'], ['Artist', '/artist/']]), ...(person ? [person] : [])]}>
-  <Entrance variant="left" meta="The artist" h1="A self-taught artist with about 30 years <em>of practice</em>" lead={`${artistLabel} paints from a studio in Kerala and learned by looking closely, trying things and painting continuously.`} primary={{ label: 'Request a proposal', href: '/contact/?type=general' }} secondary={{ label: 'See the gallery', href: '/gallery/' }} art={art} />
+  <Entrance variant="wide" meta="The artist" h1="A self-taught artist with about 30 years <em>of practice</em>" lead={`${artistLabel} paints from a studio in Kerala and learned by looking closely, trying things and painting continuously.`} primary={{ label: 'Request a proposal', href: '/contact/?type=general' }} secondary={{ label: 'See the gallery', href: '/gallery/' }} art={art} />
 
   <section class="room" aria-labelledby="learned">
     <div class="wrap cols">
@@ -23,7 +23,7 @@ const person = site.artistName ? { '@context': 'https://schema.org', '@type': 'P
   <section class="room stone" aria-labelledby="paints">
     <div class="wrap cols">
       <div><p class="meta">What is painted</p><h2 id="paints">Mediums <em>and subjects</em></h2></div>
-      <ul class="tlist" style="margin-top:0"><li>Watercolour</li><li>Oil</li><li>Acrylic</li><li>Portraits</li><li>Sketches</li><li>Devotional paintings</li><li>Other subjects, by discussion</li></ul>
+      <ul class="tlist" style="margin-top:0"><li>Watercolour</li><li>Oil</li><li>Acrylic</li><li>Portraits</li><li>Botanical paintings</li><li>Sketches</li><li>Devotional paintings</li><li>Other subjects, by discussion</li></ul>
     </div>
   </section>
 

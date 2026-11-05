@@ -17,6 +17,27 @@ The repository contained **no images** when this phase began (only planning Mark
 
 Total genuine artworks: **4**. This is thin for a launch portfolio: the site must be designed to look complete with four works without padding.
 
+## 0a. Second supply (owner zip, 2026-11-05): the portfolio is now real
+The owner supplied 17 further images (and one photograph of the artist at work). They show far more than the first four: **botanical paintings, a harbour scene, a miniature-style devotional painting, framed portraits and a pencil sketch.** The statement in the sections below that the portfolio proves only portrait and devotional work is therefore **superseded**; the site now describes botanical, portrait, devotional, marine and sketch work, and still says hospitality commissions are made to the brief (no installations are shown or claimed).
+
+Processed derivatives live in `src/assets/artworks/` (webp, sRGB, never upscaled; white borders trimmed on some; bottom screenshot artefacts cropped). Originals of the moderate-size files are kept unaltered in `assets/artwork/original/` and `assets/studio/`. Two originals (an 8.7 MB pencil-sketch photo and a 3.9 MB round devotional photo) stay with the owner.
+
+| Published (status approved) | Category | Note |
+|---|---|---|
+| botanical-banana-plant, -white-lotus, -pink-red-bloom, -magnolia-pods, -banana-bunch, -red-flower-framed | Botanical paintings | no people; safest to publish |
+| portrait-white-beard-teal-ground, -watercolour-man-blue-shirt, -nun-framed, -elder-hand-to-mouth | Portraits | **sitters are real people; the owner must confirm permission** |
+| devotional-christ-framed, devotional-ganesha-miniature | Devotional paintings | |
+| marine-ship-at-harbour, sketch-pencil-portrait | Landscapes and sketches | the sketch depicts a real person (permission) |
+| studio-artist-at-work | Artist page only (not gallery) | owner-supplied photo; computer screen and desk notes cropped out |
+
+| Held back (not published) | Why |
+|---|---|
+| `IMG-20250123-WA0021` couple portrait | signature area carries a phone number and a third-party brand mark; also two private sitters |
+| `IMG-20260824-WA0033` moustache portrait, teal ground | burned-in name and phone number |
+| `IMG_20260423_191428184` round devotional painting | photographed on a bedspread; needs a clean reshoot |
+
+Titles, mediums and sizes are still unknown and are omitted. Alt texts describe only what is visible. Approval here follows the owner's instruction to use these images; sitter permission and the owner's final selection remain the owner's decision.
+
 ## 1. Global observations
 - All four are web/social-compressed JPEGs (≤ 1600px long side, 190–400 KB), likely shared via messaging or social platforms. None meets the 2× display-width rule for a full-width image.
 - Two carry **black rectangular artefacts** (bottom edge) from screenshots; one carries a **burned-in name and contact overlay**.

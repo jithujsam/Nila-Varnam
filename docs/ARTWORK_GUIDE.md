@@ -12,7 +12,10 @@ Related: [DEPLOYMENT](DEPLOYMENT.md) · [ARTWORK_INVENTORY](assets/ARTWORK_INVEN
 
 Pages, the gallery grid, the lightbox, the index list and the structured data all read from these files.
 
-## Placeholders (current)
+## Current state
+The data file now holds **real, approved paintings** (see ARTWORK_INVENTORY §0a). Placeholders are no longer in the data. The generator (`npm run placeholders`) and the whole placeholder system remain for future use: add entries with `status: 'placeholder'` and run the generator when you need stand-ins.
+
+## Placeholders (generator)
 Eight procedurally generated abstract images live in `src/assets/placeholders/` (`placeholder-01.jpg` … `08`), made by `npm run placeholders`. They are not artwork and never depict a studio project; each shows a "Placeholder" tag. Placement keys in `placements.ts`: `homeEntrance`, `homeBands` (hospitality, gifting, private), `homeSalon`, `homePractice`, `hospitalityEntrance`, `hospitalityNote`, `giftingEntrance` (pair), `giftingNote`, `commissionsEntrance`, `commissionsNote`, `artistEntrance`, `social`.
 
 ## Statuses

@@ -49,7 +49,7 @@ export const afterSubmit = [
 ];
 
 export const faqHospitality = [
-  { q: 'Do you have hotel installations to show?', a: 'The gallery currently shows portrait and devotional paintings. Work for hospitality spaces is made to commission, so we start with your brief.' },
+  { q: 'Do you have hotel installations to show?', a: 'The gallery shows botanical, portrait, devotional and harbour paintings, not hotel installations. Work for hospitality spaces is made to commission, so we start with your brief.' },
   { q: 'Can you paint a series for one property?', a: 'We can discuss a matched series. The number of works depends on size and schedule.' },
   { q: 'What sizes can you paint?', a: 'Sizes are agreed per project. Tell us the wall and we will advise.' },
   { q: 'What mediums are available?', a: 'Watercolour, oil and acrylic.' },

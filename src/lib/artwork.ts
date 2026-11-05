@@ -35,7 +35,7 @@ function resolve(a: Artwork): ResolvedArtwork | null {
 const all: ResolvedArtwork[] = artworks.filter(isShown).map(resolve).filter((x): x is ResolvedArtwork => x !== null);
 
 export function getArtworks(category?: CategoryId): ResolvedArtwork[] {
-  return all.filter((a) => !category || a.category === category).sort((a, b) => a.order - b.order);
+  return all.filter((a) => (category ? a.category === category : a.category !== 'studio')).sort((a, b) => a.order - b.order);
 }
 
 export function getCategories(): (Category & { works: ResolvedArtwork[] })[] {
